@@ -2,12 +2,13 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Mini-actifs crypto</title>
+  <title>Game AI Assets Shop</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #0f172a;
+      background: #0f172a;
       color: #e5e7eb;
       margin: 0;
       padding: 20px;
@@ -19,10 +20,11 @@
     }
 
     .card {
-      background-color: #111827;
-      border-radius: 10px;
+      background: #111827;
+      border-radius: 12px;
       padding: 15px;
       margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
     }
 
     .price {
@@ -30,8 +32,8 @@
       font-weight: bold;
     }
 
-    .payment-box {
-      background-color: #020617;
+    .paybox {
+      background: #020617;
       padding: 10px;
       border-radius: 8px;
       margin-top: 10px;
@@ -40,43 +42,54 @@
     }
 
     button {
-      background-color: #22c55e;
+      background: #22c55e;
       color: #020617;
       border: none;
       padding: 10px;
       width: 100%;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
+      margin-top: 10px;
     }
 
     button:hover {
-      background-color: #16a34a;
+      opacity: 0.85;
     }
   </style>
 </head>
+
 <body>
 
-  <header>
-    <h1>Mini-actifs crypto</h1>
-    <p>Assets de jeux & contenus IA payables en crypto</p>
-  </header>
+<header>
+  <h1>AI Game Assets Shop</h1>
+  <p>Textures, packs, contenus IA payables en crypto</p>
+</header>
 
-  <div class="card">
-    <h2>Pack d'icônes IA (10)</h2>
-    <p>Icônes simples pour jeux mobiles.</p>
-    <p class="price">Prix : 0,05 USDT (TRC20)</p>
+<div class="card">
+  <h2>Pack Texture Sol Rocheux (5 textures)</h2>
+  <p>Textures réalistes pour jeux mobiles ou Unity.</p>
+  <p class="price">Prix : 0,05 USDT (TRC20)</p>
 
-    <div class="payment-box">
-      Adresse USDT (TRC20) :<br>
-      <strong>COLLE_ICI_TON_ADRESSE_TRUST_WALLET</strong>
-    </div>
-
-    <br>
-    <button onclick="alert('Après le paiement, le contenu sera débloqué automatiquement (prochaine étape).')">
-      J'ai payé
-    </button>
+  <div class="paybox">
+    Adresse USDT (TRC20) :<br>
+    <strong>COLLE_ICI_TON_ADRESSE</strong>
   </div>
+
+  <button onclick="alert('Paiement reçu ! Téléchargement bientôt automatique.')">
+    Acheter maintenant
+  </button>
+</div>
+
+<div class="card">
+  <h2>Pack Dust & Sand (à venir)</h2>
+  <p>Textures sable + poussière pour désert et ruines.</p>
+  <p class="price">Bientôt disponible</p>
+
+  <button onclick="alert('Ce pack arrive bientôt !')">
+    Voir bientôt
+  </button>
+</div>
 
 </body>
 </html>

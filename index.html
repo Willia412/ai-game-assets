@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Game AI Assets Shop</title>
+  <title>AI Game Assets Shop</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
@@ -16,7 +16,23 @@
 
     header {
       text-align: center;
+      margin-bottom: 20px;
+    }
+
+    nav {
+      text-align: center;
       margin-bottom: 30px;
+    }
+
+    nav a {
+      color: #22c55e;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 15px;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
     }
 
     .card {
@@ -24,21 +40,11 @@
       border-radius: 12px;
       padding: 15px;
       margin-bottom: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.4);
     }
 
     .price {
       color: #22c55e;
       font-weight: bold;
-    }
-
-    .paybox {
-      background: #020617;
-      padding: 10px;
-      border-radius: 8px;
-      margin-top: 10px;
-      font-size: 14px;
-      word-break: break-all;
     }
 
     button {
@@ -52,10 +58,6 @@
       cursor: pointer;
       margin-top: 10px;
     }
-
-    button:hover {
-      opacity: 0.85;
-    }
   </style>
 </head>
 
@@ -63,31 +65,24 @@
 
 <header>
   <h1>AI Game Assets Shop</h1>
-  <p>Textures, packs, contenus IA payables en crypto</p>
+  <p>Textures & Assets payables en crypto</p>
 </header>
 
+<!-- MENU -->
+<nav>
+  <a href="index.html">Accueil</a>
+  <a href="textures.html">Textures</a>
+  <a href="#">Packs</a>
+  <a href="#">Assistant IA</a>
+</nav>
+
 <div class="card">
-  <h2>Pack Texture Sol Rocheux (5 textures)</h2>
-  <p>Textures réalistes pour jeux mobiles ou Unity.</p>
-  <p class="price">Prix : 0,05 USDT (TRC20)</p>
+  <h2>Pack Texture Sol Rocheux</h2>
+  <p>Textures réalistes pour Unity, Unreal, jeux mobiles.</p>
+  <p class="price">Prix : 0,05 USDT</p>
 
-  <div class="paybox">
-    Adresse USDT (TRC20) :<br>
-    <strong>COLLE_ICI_TON_ADRESSE</strong>
-  </div>
-
-  <button onclick="alert('Paiement reçu ! Téléchargement bientôt automatique.')">
+  <button onclick="alert('Paiement automatique bientôt disponible')">
     Acheter maintenant
-  </button>
-</div>
-
-<div class="card">
-  <h2>Pack Dust & Sand (à venir)</h2>
-  <p>Textures sable + poussière pour désert et ruines.</p>
-  <p class="price">Bientôt disponible</p>
-
-  <button onclick="alert('Ce pack arrive bientôt !')">
-    Voir bientôt
   </button>
 </div>
 

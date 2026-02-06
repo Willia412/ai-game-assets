@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Assistant IA - AI Game Assets</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 30px;
+    }
+
+    #chatbox {
+      width: 90%;
+      max-width: 500px;
+      margin: auto;
+      background: #222;
+      padding: 20px;
+      border-radius: 15px;
+    }
+
+    input {
+      width: 80%;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      margin-top: 10px;
+    }
+
+    button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 10px;
+      background: gold;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #response {
+      margin-top: 15px;
+      color: lightgreen;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>🤖 Assistant IA</h1>
+  <p>Pose une question sur les textures ou les assets !</p>
+
+  <div id="chatbox">
+    <input id="question" placeholder="Ex: Je cherche une texture de sable...">
+    <button onclick="askAI()">Envoyer</button>
+
+    <div id="response"></div>
+  </div>
+
+  <script>
+    function askAI() {
+      let q = document.getElementById("question").value.toLowerCase();
+      let r = "Désolé, je ne comprends pas encore 😅";
+
+      if (q.includes("texture")) {
+        r = "🎨 Tu peux trouver les textures dans la section Textures du site !";
+      }
+
+      if (q.includes("prix")) {
+        r = "💰 Les prix seront ajoutés bientôt. Pour l'instant, tout est gratuit.";
+      }
+
+      if (q.includes("godot")) {
+        r = "🎮 Oui ! Nos assets seront compatibles Godot, Unity et Unreal.";
+      }
+
+      document.getElementById("response").innerText = r;
+    }
+  </script>
+
+</body>
+</html>

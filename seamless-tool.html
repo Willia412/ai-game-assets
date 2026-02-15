@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Texture Designer PRO MAX</title>
 <style>
-body { font-family: sans-serif; background:#111; color:#fff; text-align:center; padding:20px; }
+body { font-family: sans-serif; background:#111; color:#fff; text-align:center; padding:20px;}
 input, button { padding:10px; margin:5px; border-radius:5px; }
 button { cursor:pointer; }
-img { border:2px solid #4CAF50; max-width:90%; margin-top:10px; }
 .map-box { margin:10px; border:2px solid #4CAF50; padding:5px; display:inline-block; }
+canvas { max-width:100%; height:auto; display:block; margin:auto; border:1px solid #2ecc71; }
 </style>
 </head>
 <body>
@@ -23,54 +23,58 @@ img { border:2px solid #4CAF50; max-width:90%; margin-top:10px; }
 <button onclick="downloadZIP()">Télécharger ZIP</button>
 <button onclick="resetAll()">Reset</button>
 
-<div class="map-box">
-<h3>BaseColor</h3>
-<canvas id="baseColor"></canvas>
-</div>
-<div class="map-box">
-<h3>Roughness</h3>
-<canvas id="roughness"></canvas>
-</div>
-<div class="map-box">
-<h3>Height</h3>
-<canvas id="height"></canvas>
-</div>
-<div class="map-box">
-<h3>Normal</h3>
-<canvas id="normal"></canvas>
-</div>
+<div class="map-box"><h3>BaseColor</h3><canvas id="baseColor"></canvas></div>
+<div class="map-box"><h3>Roughness</h3><canvas id="roughness"></canvas></div>
+<div class="map-box"><h3>Height</h3><canvas id="height"></canvas></div>
+<div class="map-box"><h3>Normal</h3><canvas id="normal"></canvas></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script>
-let imgData = null;
 
+<script>
+let originalImage = null;
+let displayScale = 1024; // max taille pour affichage
+
+// Charger l'image
 document.getElementById('fileInput').addEventListener('change', function(e){
     const reader = new FileReader();
     reader.onload = function(event){
         const img = new Image();
         img.onload = function(){
-            const canvas = document.getElementById('baseColor');
-            canvas.width = img.width; canvas.height = img.height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img,0,0);
-            imgData = ctx.getImageData(0,0,img.width,img.height);
+            originalImage = img;
+            drawScaledImage(img);
         }
         img.src = event.target.result;
     }
     reader.readAsDataURL(e.target.files[0]);
 });
 
+// Affichage scaled pour éviter canvas énorme
+function drawScaledImage(img){
+    const canvas = document.getElementById('baseColor');
+    let scale = Math.min(displayScale / img.width, displayScale / img.height, 1);
+    canvas.width = img.width * scale;
+    canvas.height = img.height * scale;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.drawImage(img,0,0,canvas.width,canvas.height);
+}
+
+// Auto Seamless avec lissage des bords
 function autoSeamless(){
-    if(!imgData) return alert("Choisir une image !");
+    if(!originalImage) return alert("Choisir une image !");
     const canvas = document.getElementById('baseColor');
     const ctx = canvas.getContext('2d');
-    const w = canvas.width, h = canvas.height;
 
-    // Créer une nouvelle image pour le seamless
+    // Redessiner image scaled
+    drawScaledImage(originalImage);
+
+    const w = canvas.width;
+    const h = canvas.height;
+    const imgData = ctx.getImageData(0,0,w,h);
     const tmp = ctx.createImageData(w,h);
     const data = tmp.data;
 
-    // Décalage et inversion des quadrants
+    // Décalage et inverse quadrants
     for(let y=0; y<h; y++){
         for(let x=0; x<w; x++){
             const srcX = (x + w/2) % w | 0;
@@ -80,55 +84,109 @@ function autoSeamless(){
             for(let i=0;i<4;i++) data[destIndex+i] = imgData.data[srcIndex+i];
         }
     }
-
-    // Appliquer léger flou pour adoucir les bordures
     ctx.putImageData(tmp,0,0);
-    ctx.globalAlpha = 0.7;
-    for(let offset=-1; offset<=1; offset+=2){
-        ctx.drawImage(canvas, offset, 0);
-        ctx.drawImage(canvas, 0, offset);
+
+    // Lissage des bords (blending)
+    const blend = ctx.getImageData(0,0,w,h);
+    const radius = 20; // pixels pour adoucir
+    for(let y=0;y<h;y++){
+        for(let x=0;x<w;x++){
+            const i = (y*w + x)*4;
+            // Horizontal blending
+            if(x<radius){
+                let alpha = x/radius;
+                for(let c=0;c<3;c++)
+                    blend.data[i+c] = blend.data[i+c]*alpha + blend.data[i+w*4*0+c]*(1-alpha)||blend.data[i+c];
+            }
+            if(x>w-radius){
+                let alpha = (w-x)/radius;
+                for(let c=0;c<3;c++)
+                    blend.data[i+c] = blend.data[i+c]*alpha + blend.data[i+w*4*0+c]*(1-alpha)||blend.data[i+c];
+            }
+            // Vertical blending
+            if(y<radius){
+                let alpha = y/radius;
+                for(let c=0;c<3;c++)
+                    blend.data[i+c] = blend.data[i+c]*alpha + blend.data[i+c+w*4*0]*(1-alpha)||blend.data[i+c];
+            }
+            if(y>h-radius){
+                let alpha = (h-y)/radius;
+                for(let c=0;c<3;c++)
+                    blend.data[i+c] = blend.data[i+c]*alpha + blend.data[i+c+w*4*0]*(1-alpha)||blend.data[i+c];
+            }
+        }
     }
-    ctx.globalAlpha = 1;
+    ctx.putImageData(blend,0,0);
 }
 
+// Génération des 4 maps
 function generateAllMaps(){
-    if(!imgData) return alert("Choisir une image !");
-    // BaseColor déjà généré
-    const w = imgData.width, h = imgData.height;
+    if(!originalImage) return alert("Choisir une image !");
+    const canvasBase = document.getElementById('baseColor');
+    const w = canvasBase.width;
+    const h = canvasBase.height;
 
-    // Roughness simple: gris
+    // Roughness : inversé de BaseColor gris
     const canvasR = document.getElementById('roughness');
     canvasR.width = w; canvasR.height = h;
     const ctxR = canvasR.getContext('2d');
-    ctxR.fillStyle="#888"; ctxR.fillRect(0,0,w,h);
-
-    // Height simple: léger bruit
-    const canvasH = document.getElementById('height');
-    canvasH.width = w; canvasH.height = h;
-    const ctxH = canvasH.getContext('2d');
-    const imgH = ctxH.createImageData(w,h);
-    for(let i=0;i<imgH.data.length;i+=4){
-        const val = Math.random()*255|0;
-        imgH.data[i]=imgH.data[i+1]=imgH.data[i+2]=val; imgH.data[i+3]=255;
+    const imgBase = canvasBase.getContext('2d').getImageData(0,0,w,h);
+    const rough = ctxR.createImageData(w,h);
+    for(let i=0;i<imgBase.data.length;i+=4){
+        let gray = 0.299*imgBase.data[i]+0.587*imgBase.data[i+1]+0.114*imgBase.data[i+2];
+        let inv = 255 - gray;
+        rough.data[i]=rough.data[i+1]=rough.data[i+2]=inv;
+        rough.data[i+3]=255;
     }
-    ctxH.putImageData(imgH,0,0);
+    ctxR.putImageData(rough,0,0);
 
-    // Normal map simple: bleu
+    // Height : niveaux de gris
+    const canvasH = document.getElementById('height');
+    canvasH.width=w; canvasH.height=h;
+    const ctxH = canvasH.getContext('2d');
+    const heightMap = ctxH.createImageData(w,h);
+    for(let i=0;i<imgBase.data.length;i+=4){
+        let gray = 0.299*imgBase.data[i]+0.587*imgBase.data[i+1]+0.114*imgBase.data[i+2];
+        heightMap.data[i]=heightMap.data[i+1]=heightMap.data[i+2]=gray;
+        heightMap.data[i+3]=255;
+    }
+    ctxH.putImageData(heightMap,0,0);
+
+    // Normal : simple approximation
     const canvasN = document.getElementById('normal');
-    canvasN.width = w; canvasN.height = h;
+    canvasN.width=w; canvasN.height=h;
     const ctxN = canvasN.getContext('2d');
-    ctxN.fillStyle="#77a"; ctxN.fillRect(0,0,w,h);
+    const normalMap = ctxN.createImageData(w,h);
+    for(let i=0;i<imgBase.data.length;i+=4){
+        let nx = (imgBase.data[i]/255)*2-1;
+        let ny = (imgBase.data[i+1]/255)*2-1;
+        normalMap.data[i]=(nx*0.5+0.5)*255;
+        normalMap.data[i+1]=(ny*0.5+0.5)*255;
+        normalMap.data[i+2]=255;
+        normalMap.data[i+3]=255;
+    }
+    ctxN.putImageData(normalMap,0,0);
 }
 
+// Télécharger toutes les maps en ZIP
 function downloadZIP(){
+    if(!originalImage) return alert("Choisir une image !");
     const zip = new JSZip();
-    const name = document.getElementById('textureName').value || 'texture';
-    ['baseColor','roughness','height','normal'].forEach(id=>{
+    const name = document.getElementById('textureName').value || "texture";
+    const canvasIDs = ['baseColor','roughness','height','normal'];
+    let completed=0;
+    canvasIDs.forEach(id=>{
         const canvas = document.getElementById(id);
-        canvas.toBlob(blob=>{
-            zip.file(`${id}.png`, blob);
-            if(id==='normal'){
-                zip.generateAsync({type:"blob"}).then(content=>{
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width=originalImage.width;
+        tempCanvas.height=originalImage.height;
+        const ctx = tempCanvas.getContext('2d');
+        ctx.drawImage(canvas,0,0,tempCanvas.width,tempCanvas.height);
+        tempCanvas.toBlob(blob=>{
+            zip.file(`${id}.png`,blob);
+            completed++;
+            if(completed===canvasIDs.length){
+                zip.generateAsync({type:"blob"}).then(function(content){
                     const a = document.createElement('a');
                     a.href = URL.createObjectURL(content);
                     a.download = `${name}.zip`;
@@ -139,14 +197,15 @@ function downloadZIP(){
     });
 }
 
+// Reset
 function resetAll(){
     ['baseColor','roughness','height','normal'].forEach(id=>{
-        const canvas = document.getElementById(id);
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0,0,canvas.width,canvas.height);
+        const c = document.getElementById(id);
+        c.getContext('2d').clearRect(0,0,c.width,c.height);
     });
-    imgData=null;
+    originalImage=null;
+    document.getElementById('fileInput').value="";
 }
 </script>
 </body>
-  </html>
+</html>

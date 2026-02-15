@@ -4,204 +4,134 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Texture Designer PRO MAX</title>
-
-<!-- JSZIP pour export ZIP -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
 <style>
-body{
-  font-family:Arial,sans-serif;
-  background:#0b1220;
-  color:white;
-  text-align:center;
-  padding:20px;
-}
-h1{color:#22c55e;margin-bottom:5px;}
-p{color:#94a3b8;}
-input{margin:8px;padding:10px;border-radius:12px;border:none;width:240px;text-align:center;}
-.btn{background:#22c55e;border:none;padding:12px 18px;border-radius:14px;cursor:pointer;margin:6px;font-size:14px;}
-.btn:hover{opacity:0.9;}
-.btn-red{background:#ef4444;}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:20px;}
-.card{background:#111827;padding:12px;border-radius:16px;border:2px solid #1f2937;}
-canvas{width:100%;border-radius:12px;margin-top:8px;border:1px solid #22c55e;}
-footer{margin-top:25px;font-size:13px;color:#64748b;}
+body { font-family: Arial; background: #111; color: #fff; display: flex; flex-direction: column; align-items: center; padding: 20px;}
+input, button { padding: 10px; margin: 5px; border-radius: 8px; border: none;}
+button { cursor: pointer; }
+#maps { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 20px;}
+.map-box { border: 2px solid #2ecc71; padding: 5px; text-align: center; }
+.map-box canvas { max-width: 150px; max-height: 150px; display: block; margin: auto;}
 </style>
 </head>
-
 <body>
 
-<h1>Texture Designer PRO MAX</h1>
-<p>Seamless + Roughness + Height + Normal + AO + Metallic + ZIP Export</p>
+<h2>Texture Designer PRO MAX</h2>
+<input type="file" id="fileInput" accept="image/*"><br>
+<input type="text" id="textureName" placeholder="Nom texture (ex: beton_noir)"><br>
+<button id="autoSeamless">Auto Seamless</button>
+<button id="generateMaps">Générer toutes les maps</button>
+<button id="downloadZip">Télécharger ZIP</button>
+<button id="reset">Reset</button>
 
-<input type="file" id="upload" accept="image/*"><br>
-<input type="text" id="name" placeholder="Nom texture (ex: beton_noir)"><br>
-
-<div>
-<button class="btn" onclick="makeSeamless()">Auto Seamless</button>
-<button class="btn" onclick="generateAll()">Générer toutes les maps</button>
-<button class="btn" onclick="downloadZIP()">Télécharger ZIP</button>
-<button class="btn btn-red" onclick="resetAll()">Reset</button>
+<div id="maps">
+  <div class="map-box"><strong>BaseColor</strong><canvas id="baseColor"></canvas></div>
+  <div class="map-box"><strong>Roughness</strong><canvas id="roughness"></canvas></div>
+  <div class="map-box"><strong>Height</strong><canvas id="height"></canvas></div>
+  <div class="map-box"><strong>Normal</strong><canvas id="normal"></canvas></div>
 </div>
 
-<!-- PREVIEW GRID -->
-<div class="grid">
-  <div class="card"><h3>BaseColor</h3><canvas id="baseCanvas"></canvas></div>
-  <div class="card"><h3>Roughness</h3><canvas id="roughCanvas"></canvas></div>
-  <div class="card"><h3>Height</h3><canvas id="heightCanvas"></canvas></div>
-  <div class="card"><h3>Normal</h3><canvas id="normalCanvas"></canvas></div>
-  <div class="card"><h3>AO</h3><canvas id="aoCanvas"></canvas></div>
-  <div class="card"><h3>Metallic</h3><canvas id="metalCanvas"></canvas></div>
-</div>
-
-<footer>✅ PRO MAX : Seamless auto + Toutes maps + Export ZIP</footer>
+<script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 <script>
-let img=new Image();
+let img = new Image();
+let canvasBase = document.getElementById('baseColor');
+let ctxBase = canvasBase.getContext('2d');
 
-const canvases = {
-  base: document.getElementById("baseCanvas"),
-  rough: document.getElementById("roughCanvas"),
-  height: document.getElementById("heightCanvas"),
-  normal: document.getElementById("normalCanvas"),
-  ao: document.getElementById("aoCanvas"),
-  metal: document.getElementById("metalCanvas")
-};
-
-const ctxs = {};
-for(let key in canvases){ ctxs[key] = canvases[key].getContext("2d"); }
-
-let dataURLs={};
-
-function setupCanvas(w,h){
-  for(let key in canvases){ canvases[key].width=w; canvases[key].height=h; }
-}
-
-/* Upload */
-document.getElementById("upload").addEventListener("change",(e)=>{
-  let file=e.target.files[0];
-  img.src=URL.createObjectURL(file);
-  img.onload=()=>{
-    setupCanvas(img.width,img.height);
-    ctxs.base.drawImage(img,0,0);
-    dataURLs.base=canvases.base.toDataURL();
-    alert("Image chargée !");
-  };
-});
-
-/* Seamless auto */
-function makeSeamless(){
-  let w=canvases.base.width,h=canvases.base.height;
-  let d=ctxs.base.getImageData(0,0,w,h);
-  ctxs.base.clearRect(0,0,w,h);
-  ctxs.base.putImageData(d,w/2,h/2);
-  ctxs.base.putImageData(d,-w/2,-h/2);
-  dataURLs.base=canvases.base.toDataURL();
-  alert("Seamless appliqué !");
-}
-
-/* Roughness */
-function makeRoughness(){
-  let w=canvases.base.width,h=canvases.base.height;
-  let imgData=ctxs.base.getImageData(0,0,w,h);
-  let d=imgData.data;
-  for(let i=0;i<d.length;i+=4){
-    let gray=(d[i]+d[i+1]+d[i+2])/3;
-    d[i]=d[i+1]=d[i+2]=gray;
-  }
-  ctxs.rough.putImageData(imgData,0,0);
-  dataURLs.rough=canvases.rough.toDataURL();
-}
-
-/* Height */
-function makeHeight(){
-  let w=canvases.base.width,h=canvases.base.height;
-  let imgData=ctxs.base.getImageData(0,0,w,h);
-  let d=imgData.data;
-  for(let i=0;i<d.length;i+=4){
-    let gray=Math.min(255,(d[i]+d[i+1]+d[i+2])/3*1.5);
-    d[i]=d[i+1]=d[i+2]=gray;
-  }
-  ctxs.height.putImageData(imgData,0,0);
-  dataURLs.height=canvases.height.toDataURL();
-}
-
-/* Normal */
-function makeNormal(){
-  let w=canvases.base.width,h=canvases.base.height;
-  let imgData=ctxs.base.getImageData(0,0,w,h);
-  let d=imgData.data;
-  for(let y=1;y<h-1;y++){
-    for(let x=1;x<w-1;x++){
-      let i=(y*w+x)*4;
-      let left=d[i-4], right=d[i+4], up=d[i-w*4], down=d[i+w*4];
-      let dx=(right-left)/255, dy=(down-up)/255;
-      d[i]=(dx*127)+128; d[i+1]=(dy*127)+128; d[i+2]=255;
+document.getElementById('fileInput').addEventListener('change', function(e){
+  let file = e.target.files[0];
+  let reader = new FileReader();
+  reader.onload = function(ev){
+    img.src = ev.target.result;
+    img.onload = function(){
+      canvasBase.width = img.width;
+      canvasBase.height = img.height;
+      ctxBase.drawImage(img,0,0);
     }
   }
-  ctxs.normal.putImageData(imgData,0,0);
-  dataURLs.normal=canvases.normal.toDataURL();
+  reader.readAsDataURL(file);
+});
+
+function makeSeamless(context){
+  let w = context.canvas.width;
+  let h = context.canvas.height;
+  let temp = document.createElement('canvas');
+  temp.width = w;
+  temp.height = h;
+  let tctx = temp.getContext('2d');
+  // Décalage 50% horizontal et vertical
+  tctx.drawImage(context.canvas, w/2, h/2, w/2, h/2, 0,0, w/2, h/2);
+  tctx.drawImage(context.canvas, 0, h/2, w/2, h/2, w/2,0,w/2,h/2);
+  tctx.drawImage(context.canvas, w/2,0,w/2,h/2,0,h/2,w/2,h/2);
+  tctx.drawImage(context.canvas,0,0,w/2,h/2,w/2,h/2,w/2,h/2);
+  context.clearRect(0,0,w,h);
+  context.drawImage(temp,0,0);
 }
 
-/* AO */
-function makeAO(){
-  let w=canvases.base.width,h=canvases.base.height;
-  let imgData=ctxs.base.getImageData(0,0,w,h);
-  let d=imgData.data;
-  for(let i=0;i<d.length;i+=4){
-    let gray=(d[i]+d[i+1]+d[i+2])/3*0.7;
-    d[i]=d[i+1]=d[i+2]=gray;
-  }
-  ctxs.ao.putImageData(imgData,0,0);
-  dataURLs.ao=canvases.ao.toDataURL();
-}
+document.getElementById('autoSeamless').addEventListener('click', function(){
+  makeSeamless(ctxBase);
+});
 
-/* Metallic */
-function makeMetallic(){
-  let w=canvases.base.width,h=canvases.base.height;
-  let imgData=ctxs.base.getImageData(0,0,w,h);
-  let d=imgData.data;
-  for(let i=0;i<d.length;i+=4){
-    let gray=(d[i]+d[i+1]+d[i+2])/3*0.5;
-    d[i]=d[i+1]=d[i+2]=gray;
-  }
-  ctxs.metal.putImageData(imgData,0,0);
-  dataURLs.metal=canvases.metal.toDataURL();
-}
+function generateMaps(){
+  let width = canvasBase.width;
+  let height = canvasBase.height;
 
-/* Générer toutes les maps */
-function generateAll(){
-  makeRoughness(); makeHeight(); makeNormal(); makeAO(); makeMetallic();
-  alert("Toutes les maps générées !");
-}
+  let canvases = {
+    roughness: document.getElementById('roughness'),
+    height: document.getElementById('height'),
+    normal: document.getElementById('normal')
+  };
 
-/* Export ZIP */
-async function downloadZIP(){
-  let name=document.getElementById("name").value.trim();
-  if(name==="") name="texture";
-
-  if(!dataURLs.base){ alert("Charge une image d'abord !"); return; }
-
-  let zip=new JSZip();
-  for(let key in dataURLs){
-    zip.file(name+"_"+key+".png",dataURLs[key].split(",")[1],{base64:true});
+  for(let key in canvases){
+    canvases[key].width = width;
+    canvases[key].height = height;
   }
 
-  let content=await zip.generateAsync({type:"blob"});
-  let link=document.createElement("a");
-  link.href=URL.createObjectURL(content);
-  link.download=name+"_PBR_PRO_MAX.zip";
-  link.click();
-  alert("ZIP téléchargé !");
+  let baseData = ctxBase.getImageData(0,0,width,height);
+  let roughCtx = canvases.roughness.getContext('2d');
+  let heightCtx = canvases.height.getContext('2d');
+  let normalCtx = canvases.normal.getContext('2d');
+
+  let rough = roughCtx.createImageData(width,height);
+  let heightMap = heightCtx.createImageData(width,height);
+  let normalMap = normalCtx.createImageData(width,height);
+
+  for(let i=0;i<baseData.data.length;i+=4){
+    let r = baseData.data[i];
+    let g = baseData.data[i+1];
+    let b = baseData.data[i+2];
+    let gray = 0.299*r + 0.587*g + 0.114*b;
+    // Roughness : inversé du gris
+    rough.data[i] = rough.data[i+1] = rough.data[i+2] = 255 - gray;
+    rough.data[i+3] = 255;
+    // Height : gris
+    heightMap.data[i] = heightMap.data[i+1] = heightMap.data[i+2] = gray;
+    heightMap.data[i+3] = 255;
+    // Normal (simple approximation)
+    let nx = (r/255)*2-1;
+    let ny = (g/255)*2-1;
+    normalMap.data[i] = (nx*0.5+0.5)*255;
+    normalMap.data[i+1] = (ny*0.5+0.5)*255;
+    normalMap.data[i+2] = 255;
+    normalMap.data[i+3] = 255;
+  }
+
+  roughCtx.putImageData(rough,0,0);
+  heightCtx.putImageData(heightMap,0,0);
+  normalCtx.putImageData(normalMap,0,0);
 }
 
-/* Reset */
-function resetAll(){
-  for(let key in ctxs){ ctxs[key].clearRect(0,0,canvases.base.width,canvases.base.height); }
-  dataURLs={};
-  alert("Reset terminé !");
-}
+document.getElementById('generateMaps').addEventListener('click', generateMaps);
+
+// Reset
+document.getElementById('reset').addEventListener('click', function(){
+  ctxBase.clearRect(0,0,canvasBase.width,canvasBase.height);
+  ['roughness','height','normal'].forEach(id=>{
+    let c = document.getElementById(id);
+    c.getContext('2d').clearRect(0,0,c.width,c.height);
+  });
+});
+
 </script>
-
 </body>
   </html>

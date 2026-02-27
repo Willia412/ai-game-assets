@@ -1,105 +1,184 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Textures - AI Game Assets</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Textures Marketplace - AI Game Assets Shop</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: #e5e7eb;
-      margin: 0;
-      padding: 20px;
-    }
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: #e5e7eb;
+  margin: 0;
+  padding: 20px;
+}
 
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
+header {
+  text-align: center;
+  padding: 20px;
+  background: #0b1220;
+}
 
-    a {
-      color: #22c55e;
-      font-weight: bold;
-      text-decoration: none;
-    }
+header h1 {
+  margin: 0;
+}
 
-    .texture-card {
-      background: #111827;
-      border-radius: 12px;
-      padding: 15px;
-      margin-bottom: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.4);
-    }
+nav {
+  text-align: center;
+  padding: 15px;
+  background: #111827;
+  margin-bottom: 30px;
+}
 
-    .price {
-      color: #22c55e;
-      font-weight: bold;
-    }
+nav a {
+  color: #22c55e;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 0 12px;
+}
 
-    button {
-      background: #22c55e;
-      color: #020617;
-      border: none;
-      padding: 10px;
-      width: 100%;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
+nav a:hover {
+  text-decoration: underline;
+}
 
-    button:hover {
-      opacity: 0.85;
-    }
-  </style>
+.section-title {
+  text-align: center;
+  margin: 30px 0 20px;
+}
+
+.search-bar {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.search-bar input {
+  padding: 10px;
+  width: 80%;
+  max-width: 400px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+}
+
+.marketplace {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.card {
+  background: #111827;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+.price {
+  color: #22c55e;
+  font-weight: bold;
+}
+
+.buy-btn {
+  background: #22c55e;
+  color: #020617;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.buy-btn:hover {
+  background: #16a34a;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #0b1220;
+  margin-top: 50px;
+}
+</style>
 </head>
 
 <body>
 
-<h1>Catalogue Textures</h1>
+<header>
+  <h1>Marketplace Textures</h1>
+  <p>Rechercher et acheter vos textures payables en crypto</p>
+</header>
 
-<p style="text-align:center;">
-  <a href="index.html">← Retour à l'accueil</a>
-</p>
+<nav>
+  <a href="index.html">Accueil</a>
+  <a href="textures.html">Textures</a>
+  <a href="asset-tool.html">Asset + Texture 3D</a>
+  <a href="seamless-tool.html">Seamless Tool</a>
+  <a href="assistant.html">Assistant IA</a>
+</nav>
 
-<!-- TEXTURE 1 -->
-<div class="texture-card">
-  <h2>Texture Sol Rocheux</h2>
-  <p>Description : sol réaliste pour ruines, RPG, désert.</p>
-  <p class="price">Prix : 0,02 USDT</p>
-
-  <button onclick="alert('Téléchargement disponible bientôt !')">
-    Voir / Acheter
-  </button>
+<div class="section-title">
+  <h2>Recherche de textures</h2>
 </div>
 
-<!-- TEXTURE 2 -->
-<div class="texture-card">
-  <h2>Texture Sable & Poussière</h2>
-  <p>Description : parfait pour jeux désertiques et scènes antiques.</p>
-  <p class="price">Prix : 0,03 USDT</p>
-
-  <button onclick="alert('Pack bientôt en ligne !')">
-    Voir / Acheter
-  </button>
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="Rechercher par nom ou catégorie..." onkeyup="filterTextures()">
 </div>
 
-<!-- TEXTURE 3 -->
-<div class="texture-card">
-  <h2>Texture Mur Béton Sombre</h2>
-  <p>Description : mur grunge idéal pour jeux horror ou urbains.</p>
-  <p class="price">Prix : 0,04 USDT</p>
+<div class="marketplace" id="marketplace">
 
-  <button onclick="alert('Ajout en cours !')">
-    Voir / Acheter
-  </button>
+  <div class="card" data-name="Texture Sol Rocheux" data-category="sol">
+    <h3>Texture Sol Rocheux</h3>
+    <p>Texture réaliste pour Unity, Unreal, jeux mobiles.</p>
+    <p class="price">Prix : 0,05 USDT</p>
+    <button class="buy-btn" onclick="buyItem('Texture Sol Rocheux')">Acheter maintenant</button>
+  </div>
+
+  <div class="card" data-name="Texture Herbe Verte" data-category="herbe">
+    <h3>Texture Herbe Verte</h3>
+    <p>Texture haute résolution pour terrains réalistes.</p>
+    <p class="price">Prix : 0,03 USDT</p>
+    <button class="buy-btn" onclick="buyItem('Texture Herbe Verte')">Acheter maintenant</button>
+  </div>
+
+  <div class="card" data-name="Pack Sol Complet" data-category="pack">
+    <h3>Pack Sol Complet</h3>
+    <p>10 textures différentes pour sols réalistes.</p>
+    <p class="price">Prix : 0,15 USDT</p>
+    <button class="buy-btn" onclick="buyItem('Pack Sol Complet')">Acheter maintenant</button>
+  </div>
+
 </div>
 
-<p style="text-align:center; margin-top:30px;">
-  🚀 Plus de textures arrivent bientôt !
-</p>
+<footer>
+  © 2025 AI Game Assets Shop
+</footer>
+
+<script>
+function buyItem(name) {
+  alert("Paiement crypto automatique bientôt disponible pour : " + name);
+}
+
+function filterTextures() {
+  const input = document.getElementById('searchInput').value.toLowerCase();
+  const cards = document.querySelectorAll('#marketplace .card');
+
+  cards.forEach(card => {
+    const name = card.dataset.name.toLowerCase();
+    const category = card.dataset.category.toLowerCase();
+    if (name.includes(input) || category.includes(input)) {
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
+  });
+}
+</script>
 
 </body>
   </html>

@@ -74,18 +74,15 @@ nav a:hover {
   color: #94a3b8;
 }
 
-.sub-section button {
-  background: #22c55e;
-  border: none;
-  color: #020617;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-bottom: 5px;
+.sub-section a {
+  display: block;
+  margin: 5px 0;
+  color: #22c55e;
+  text-decoration: none;
 }
 
-.sub-section button:hover {
-  background: #16a34a;
+.sub-section a:hover {
+  text-decoration: underline;
 }
 
 /* CONTENU PRINCIPAL */
@@ -111,43 +108,6 @@ header p {
   margin-top: 10px;
 }
 
-/* MARKETPLACE */
-.marketplace {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 0 20px;
-}
-
-.card {
-  background: #111827;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.price {
-  color: #22c55e;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-.buy-btn {
-  background: #22c55e;
-  color: #020617;
-  border: none;
-  padding: 12px;
-  width: 100%;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 15px;
-}
-
-.buy-btn:hover {
-  background: #16a34a;
-}
-
 /* FOOTER */
 footer {
   text-align: center;
@@ -165,7 +125,6 @@ footer {
 <nav>
   <input type="text" id="search-bar" placeholder="Rechercher...">
   <a href="#accueil">Accueil</a>
-  <a href="#marketplace">Marketplace</a>
   <a href="#contact">Contact</a>
   <a id="custom-toggle">Personnaliser le menu</a>
 
@@ -174,14 +133,9 @@ footer {
     <p>Outils en cours de développement</p>
 
     <div class="sub-section" id="future-tools">
-      <button onclick="toggleSub('assets')">Assets & Textures 3D</button>
-      <div id="assets" style="display:none;">Section en développement...</div>
-
-      <button onclick="toggleSub('seamless')">Outil Seamless</button>
-      <div id="seamless" style="display:none;">Section en développement...</div>
-
-      <button onclick="toggleSub('assistant')">Assistant IA</button>
-      <div id="assistant" style="display:none;">Section en développement...</div>
+      <a href="asset-tool.html">Assets & Textures 3D</a>
+      <a href="seamless-tool.html">Outil Seamless</a>
+      <a href="assistant.html">Assistant IA</a>
     </div>
 
     <button onclick="toggleFutureTools()">Afficher / Masquer les outils</button>
@@ -194,19 +148,6 @@ footer {
   <h1>DEV FOUNDATION</h1>
   <p>Le marketplace qui évolue grâce à vous</p>
 </header>
-
-<section class="marketplace" id="marketplace">
-  <div class="card">
-    <h3>Pack Texture Sol Rocheux</h3>
-    <p>Textures réalistes pour Unity, Unreal et jeux mobiles</p>
-    <p class="price">Prix : 0,05 USDT</p>
-
-    <button class="buy-btn" 
-      onclick="window.open('https://nowpayments.io/embeds/payment-widget?iid=4754618608','_blank')">
-      Acheter maintenant
-    </button>
-  </div>
-</section>
 
 <footer id="contact">
   © 2025 DEV FOUNDATION | Contact: dev.foundation.contact@gmail.com
@@ -227,12 +168,6 @@ function toggleFutureTools() {
   future.style.display = (future.style.display === 'none' || future.style.display === '') ? 'block' : 'none';
 }
 
-// Toggle sous-section d’un outil
-function toggleSub(id) {
-  const elem = document.getElementById(id);
-  elem.style.display = (elem.style.display === 'none' || elem.style.display === '') ? 'block' : 'none';
-}
-
 // Recherche simple du menu
 const searchBar = document.getElementById('search-bar');
 searchBar.addEventListener('input', () => {
@@ -249,4 +184,4 @@ searchBar.addEventListener('input', () => {
 </script>
 
 </body>
-        </html>
+  </html>

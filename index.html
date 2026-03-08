@@ -11,98 +11,56 @@ body {
   background: #0f172a;
   color: #e5e7eb;
   margin: 0;
+  display: flex;
+  min-height: 100vh;
 }
 
+/* MENU VERTICAL */
+nav {
+  width: 200px;
+  background: #111827;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+nav a {
+  color: #22c55e;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 15px 0;
+  font-size: 18px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* CONTENU PRINCIPAL */
+.main-content {
+  flex: 1;
+  padding: 40px 20px;
+}
+
+/* TITRE */
 header {
   text-align: center;
-  padding: 30px 20px;
-  background: #0b1220;
+  padding-bottom: 40px;
 }
 
 header h1 {
   margin: 0;
+  font-size: 36px;
 }
 
 header p {
   color: #94a3b8;
-}
-
-#menu-button {
-  display: block;
-  background: #22c55e;
-  color: #020617;
-  border: none;
-  padding: 12px 20px;
-  margin: 10px auto;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-#menu-content {
-  max-width: 300px;
-  margin: 0 auto 20px auto;
-  background: #111827;
-  border-radius: 12px;
-  padding: 10px;
-  display: none;
-}
-
-#menu-content ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-#menu-content ul li {
-  padding: 10px 0;
-  text-align: center;
-}
-
-#menu-content ul li a {
-  color: #22c55e;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-#menu-content ul li a:hover {
-  text-decoration: underline;
-}
-
-.section-title {
-  text-align: center;
-  margin: 40px 0 20px;
-}
-
-.tools-container {
-  max-width: 900px;
-  margin: auto;
-  padding: 0 20px;
-}
-
-.tool-card {
-  background: #111827;
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.tool-card a {
-  display: inline-block;
+  font-size: 20px;
   margin-top: 10px;
-  background: #22c55e;
-  color: #020617;
-  padding: 10px 20px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
 }
 
-.tool-card a:hover {
-  background: #16a34a;
-}
-
+/* MARKETPLACE */
 .marketplace {
   max-width: 900px;
   margin: 40px auto;
@@ -120,121 +78,70 @@ header p {
 .price {
   color: #22c55e;
   font-weight: bold;
+  margin-top: 10px;
 }
 
 .buy-btn {
   background: #22c55e;
   color: #020617;
   border: none;
-  padding: 10px;
+  padding: 12px;
   width: 100%;
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .buy-btn:hover {
   background: #16a34a;
 }
 
+/* FOOTER */
 footer {
   text-align: center;
   padding: 20px;
   background: #0b1220;
   margin-top: 50px;
+  color: #94a3b8;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>DEV Foundation</h1>
-  <p>Textures & Assets payables en crypto</p>
+<!-- MENU VERTICAL -->
+<nav>
+  <a href="#accueil">Accueil</a>
+  <a href="#marketplace">Marketplace</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<div class="main-content">
+
+<header id="accueil">
+  <h1>Bienvenue sur DEV FOUNDATION</h1>
+  <p>Le marketplace qui évolue grâce à vous</p>
 </header>
 
-<!-- MENU BOUTON -->
-<button id="menu-button">Menu ☰</button>
-<div id="menu-content">
-  <ul>
-    <li><a href="#assets">Assets / Textures 3D</a></li>
-    <li><a href="#paiement">Paiement Crypto</a></li>
-    <li><a href="#about">À propos</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</div>
-
-<h2 class="section-title" id="assets">Nos Outils</h2>
-
-<div class="tools-container">
-
-  <div class="tool-card assistant tool">
-    <h3>🤖 Assistant IA</h3>
-    <p>Aide et informations sur les textures et fonctionnalités du site.</p>
-    <a href="assistant.html">Ouvrir</a>
-  </div>
-
-  <div class="tool-card tool">
-    <h3>🎮 Outil Asset + Texture 3D</h3>
-    <p>Appliquer et tester des textures sur objets 3D.</p>
-    <a href="asset-tool.html">Ouvrir</a>
-  </div>
-
-  <div class="tool-card tool">
-    <h3>🧱 Outil Seamless</h3>
-    <p>Tester la répétition d'une texture.</p>
-    <a href="seamless-tool.html">Ouvrir</a>
-  </div>
-
-</div>
-
-<h2 class="section-title" id="paiement">Produit en vedette</h2>
-
-<div class="marketplace">
+<section class="marketplace" id="marketplace">
   <div class="card">
     <h3>Pack Texture Sol Rocheux</h3>
-    <p>Textures réalistes pour Unity, Unreal, jeux mobiles.</p>
+    <p>Textures réalistes pour Unity, Unreal et jeux mobiles</p>
     <p class="price">Prix : 0,05 USDT</p>
 
-    <!-- Bouton d'achat dynamique -->
-    <button class="buy-btn" onclick="window.open('https://nowpayments.io/embeds/payment-widget?iid=4754618608','_blank')">
+    <button class="buy-btn" 
+      onclick="window.open('https://nowpayments.io/embeds/payment-widget?iid=4754618608','_blank')">
       Acheter maintenant
     </button>
   </div>
-</div>
-
-<!-- WIDGET NOWPayments directement intégré -->
-<iframe src="https://nowpayments.io/embeds/payment-widget?iid=4754618608" width="410" height="696" frameborder="0" scrolling="no" style="overflow-y: hidden;"></iframe>
+</section>
 
 <footer id="contact">
-  © 2025 DEV Foundation | Contact: dev.foundation.contact@gmail.com
+  © 2025 DEV FOUNDATION | Contact: dev.foundation.contact@gmail.com
 </footer>
 
-<script>
-// Script menu toggle
-const menuButton = document.getElementById('menu-button');
-const menuContent = document.getElementById('menu-content');
-
-menuButton.addEventListener('click', () => {
-  menuContent.style.display = (menuContent.style.display === 'none') ? 'block' : 'none';
-});
-
-// Filtrage outils (comme avant)
-function filterTools(category) {
-  const tools = document.querySelectorAll('.tool-card');
-
-  tools.forEach(tool => {
-    if (category === 'all') {
-      tool.style.display = "block";
-    } else if (category === 'assistant') {
-      tool.style.display = tool.classList.contains('assistant') ? "block" : "none";
-    } else if (category === 'tool') {
-      tool.style.display = !tool.classList.contains('assistant') ? "block" : "none";
-    }
-  });
-}
-</script>
+</div>
 
 </body>
-  </html>
+</html>

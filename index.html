@@ -2,167 +2,122 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>DEV Foundation</title>
+<title>DEV FOUNDATION</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{
-font-family:Arial,sans-serif;
-background:#0f172a;
-color:#e5e7eb;
-margin:0;
-display:flex;
-min-height:100vh;
+body {
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: #e5e7eb;
+  margin: 0;
+  padding: 0;
+}
+
+/* HEADER */
+header {
+  background: #0b1220;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 36px;
+}
+
+header p {
+  color: #94a3b8;
+  font-size: 20px;
+  margin-top: 10px;
 }
 
 /* MENU */
-nav{
-width:230px;
-background:#111827;
-padding:20px;
-display:flex;
-flex-direction:column;
+.menu-bar {
+  background: #111827;
+  padding: 10px;
+  text-align: center;
 }
 
-/* Barre recherche */
-#search-bar{
-width:100%;
-padding:10px;
-border-radius:8px;
-border:none;
-margin-bottom:20px;
-font-size:16px;
+.menu-btn {
+  background: #22c55e;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
-/* Liens menu */
-nav a{
-color:#22c55e;
-text-decoration:none;
-font-weight:bold;
-margin:10px 0;
-font-size:18px;
-padding:8px;
-border-radius:6px;
+.menu-content {
+  display: none;
+  background: #020617;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
 }
 
-nav a:hover{
-background:#1f2937;
+.menu-content a {
+  display: block;
+  color: #22c55e;
+  text-decoration: none;
+  padding: 6px 0;
 }
 
-/* Menu personnalisable */
-#custom-menu{
-display:none;
-margin-top:15px;
-padding-top:10px;
-border-top:1px solid #22c55e;
+/* SEARCH */
+.search {
+  text-align: center;
+  margin: 30px 0;
 }
 
-.sub-section{
-display:none;
-margin-top:10px;
-background:#1f2937;
-border-radius:8px;
-padding:10px;
+.search input {
+  width: 80%;
+  max-width: 400px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
 }
 
-.sub-section a{
-display:block;
-margin:6px 0;
-}
-
-/* Contenu */
-.main-content{
-flex:1;
-padding:40px;
-}
-
-/* Header */
-header{
-text-align:center;
-}
-
-header h1{
-font-size:36px;
-margin:0;
-}
-
-header p{
-color:#94a3b8;
-font-size:20px;
-}
-
-/* Footer */
-footer{
-text-align:center;
-margin-top:50px;
-color:#94a3b8;
+/* FOOTER */
+footer {
+  background: #0b1220;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
 }
 </style>
 </head>
 
 <body>
 
-<nav>
-
-<input type="text" id="search-bar" placeholder="Rechercher...">
-
-<a href="#accueil">Accueil</a>
-
-<a href="textures.html">Textures Marketplace</a>
-
-<a href="#contact">Contact</a>
-
-<a id="custom-toggle">Personnaliser le menu</a>
-
-<div id="custom-menu">
-
-<p>Outils en cours de développement</p>
-
-<div class="sub-section" id="future-tools">
-<a href="asset-tool.html">Assets & Textures 3D</a>
-<a href="seamless-tool.html">Outil Seamless</a>
-<a href="assistant.html">Assistant IA</a>
-</div>
-
-<button onclick="toggleFutureTools()">Afficher / Masquer les outils</button>
-
-</div>
-
-</nav>
-
-<div class="main-content">
-
-<header id="accueil">
+<header>
 <h1>DEV FOUNDATION</h1>
 <p>Le marketplace qui évolue grâce à vous</p>
 </header>
 
-<footer id="contact">
-© 2025 DEV FOUNDATION | Contact: dev.foundation.contact@gmail.com
-</footer>
-
+<div class="menu-bar">
+<button class="menu-btn" onclick="toggleMenu()">☰ Menu</button>
+<div id="menu" class="menu-content">
+<a href="index.html">Accueil</a>
+<a href="contact.html">Contact</a>
+<a href="textures.html">Textures Marketplace</a>
+</div>
 </div>
 
+<div class="search">
+<input type="text" id="searchInput" placeholder="Rechercher...">
+</div>
+
+<footer>
+© 2025 DEV FOUNDATION
+</footer>
+
 <script>
-
-const customToggle=document.getElementById("custom-toggle");
-const customMenu=document.getElementById("custom-menu");
-
-customToggle.onclick=()=>{
-customMenu.style.display=
-customMenu.style.display==="block"?"none":"block";
-};
-
-function toggleFutureTools(){
-
-const future=document.getElementById("future-tools");
-
-future.style.display=
-future.style.display==="block"?"none":"block";
-
+function toggleMenu(){
+const menu=document.getElementById("menu");
+menu.style.display = menu.style.display==="block" ? "none" : "block";
 }
-
 </script>
 
 </body>
-  </html>
+</html>

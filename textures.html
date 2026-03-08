@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Textures - DEV Fondation</title>
+<title>Textures Marketplace - DEV FOUNDATION</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -17,8 +17,19 @@ body {
 /* HEADER */
 header {
   background: #0b1220;
-  padding: 20px;
+  padding: 40px 20px;
   text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 36px;
+}
+
+header p {
+  color: #94a3b8;
+  font-size: 20px;
+  margin-top: 10px;
 }
 
 /* MENU */
@@ -67,25 +78,6 @@ header {
   font-size: 16px;
 }
 
-/* MARKETPLACE */
-.marketplace {
-  max-width: 900px;
-  margin: auto;
-  padding: 20px;
-}
-
-.card {
-  background: #111827;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
-}
-
-.card h3 {
-  margin-top: 0;
-  color: #22c55e;
-}
-
 /* FOOTER */
 footer {
   background: #0b1220;
@@ -99,8 +91,8 @@ footer {
 <body>
 
 <header>
-<h1>Textures Library</h1>
-<p>Bibliothèque de textures pour développeurs de jeux</p>
+<h1>Textures Marketplace</h1>
+<p>Rechercher vos textures payables en crypto</p>
 </header>
 
 <div class="menu-bar">
@@ -108,50 +100,22 @@ footer {
 <div id="menu" class="menu-content">
 <a href="index.html">Accueil</a>
 <a href="contact.html">Contact</a>
+<a href="textures.html">Textures Marketplace</a>
 </div>
 </div>
 
 <div class="search">
-<input type="text" id="searchInput" placeholder="Rechercher une texture..." onkeyup="searchTexture()">
-</div>
-
-<div class="marketplace" id="marketplace">
-
-<div class="card" data-name="Texture Sol Rocheux">
-<h3>Texture Sol Rocheux</h3>
-<p>Texture réaliste pour terrains rocheux.</p>
-</div>
-
-<div class="card" data-name="Texture Herbe Verte">
-<h3>Texture Herbe Verte</h3>
-<p>Texture naturelle pour paysages et terrains.</p>
-</div>
-
-<div class="card" data-name="Pack Sol Complet">
-<h3>Pack Sol Complet</h3>
-<p>Pack de textures variées pour différents types de sols.</p>
-</div>
-
+<input type="text" id="searchInput" placeholder="Rechercher...">
 </div>
 
 <footer>
-© 2025 DEV Fondation
+© 2025 DEV FOUNDATION
 </footer>
 
 <script>
 function toggleMenu(){
-const menu=document.getElementById("menu");
-menu.style.display = menu.style.display==="block" ? "none" : "block";
-}
-
-function searchTexture(){
-const input=document.getElementById("searchInput").value.toLowerCase();
-const cards=document.querySelectorAll(".card");
-
-cards.forEach(card=>{
-const name=card.dataset.name.toLowerCase();
-card.style.display = name.includes(input) ? "block" : "none";
-});
+  const menu = document.getElementById("menu");
+  menu.style.display = menu.style.display==="block" ? "none" : "block";
 }
 </script>
 

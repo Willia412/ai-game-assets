@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Publier un Asset - DEV STOCK SHOP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: #e5e7eb;
+  margin: 0;
+  padding: 0;
+}
+
+/* HEADER */
+header {
+  background: #0b1220;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 36px;
+}
+
+header p {
+  color: #94a3b8;
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+/* MENU */
+.menu-bar {
+  background: #111827;
+  padding: 10px;
+  text-align: center;
+}
+
+.menu-btn {
+  background: #22c55e;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.menu-content {
+  display: none;
+  background: #020617;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.menu-content a {
+  display: block;
+  color: #22c55e;
+  text-decoration: none;
+  padding: 6px 0;
+}
+
+/* SEARCH */
+.search {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.search input {
+  width: 80%;
+  max-width: 400px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+/* FORMULAIRE */
+.form-container {
+  max-width: 700px;
+  margin: auto;
+  background: #111827;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-container label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.form-container input, 
+.form-container select, 
+.form-container textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 6px;
+  border: none;
+  font-size: 16px;
+  background: #1f2937;
+  color: #e5e7eb;
+}
+
+.form-container textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-container button {
+  margin-top: 20px;
+  background: #22c55e;
+  color: #020617;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.form-container button:hover {
+  background: #16a34a;
+}
+
+footer {
+  background: #0b1220;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>DEV STOCK SHOP</h1>
+<p>Publier vos assets pour le marketplace</p>
+</header>
+
+<div class="menu-bar">
+<button class="menu-btn" onclick="toggleMenu()">☰ Menu</button>
+<div id="menu" class="menu-content">
+<a href="index.html">Accueil</a>
+<a href="contact.html">Contact</a>
+<a href="textures.html">DEV STOCK SHOP</a>
+</div>
+</div>
+
+<div class="search">
+<input type="text" id="searchInput" placeholder="Rechercher vos assets...">
+</div>
+
+<div class="form-container">
+<h2>Publier un Asset</h2>
+
+<form id="publishForm">
+
+<label>Nom de la boutique <span style="color:#f87171;">*</span></label>
+<input type="text" name="shopName" placeholder="Ex: Ma Boutique" required>
+
+<label>Logo de la boutique (optionnel)</label>
+<input type="file" name="shopLogo" accept="image/*">
+
+<label>Nom de l’asset <span style="color:#f87171;">*</span></label>
+<input type="text" name="assetName" required>
+
+<label>Type de l’asset <span style="color:#f87171;">*</span></label>
+<select name="assetType" required>
+  <option value="">Sélectionner</option>
+  <option value="texture">Texture</option>
+  <option value="musique">Musique</option>
+  <option value="animation">Animation</option>
+  <option value="projet">Projet non terminé</option>
+  <option value="photo">Photo brute</option>
+</select>
+
+<label>Création <span style="color:#f87171;">*</span></label>
+<select name="creationType" required>
+  <option value="">Sélectionner</option>
+  <option value="ia">IA</option>
+  <option value="photo">Photo</option>
+  <option value="pixel">Pixel</option>
+  <option value="art">Art</option>
+  <option value="manuel">Manuel</option>
+</select>
+
+<label>Pack ou unique <span style="color:#f87171;">*</span></label>
+<select name="packUnique" required>
+  <option value="">Sélectionner</option>
+  <option value="pack">Pack</option>
+  <option value="unique">Unique</option>
+</select>
+
+<label>Licence <span style="color:#f87171;">*</span></label>
+<input type="text" name="license" placeholder="Ex: Usage commercial autorisé" required>
+
+<label>Description <span style="color:#f87171;">*</span></label>
+<textarea name="description" placeholder="Décrire votre asset..." required></textarea>
+
+<label>Email (optionnel)</label>
+<input type="email" name="email" placeholder="Ex: monemail@mail.com">
+
+<label>Adresse crypto <span style="color:#f87171;">*</span></label>
+<input type="text" name="cryptoAddress" placeholder="Ex: TRC20 / USDT / ETH ..." required>
+
+<label>WalletConnect (optionnel)</label>
+<input type="text" name="walletConnect" placeholder="Ex: Adresse WalletConnect">
+
+<label>Cryptos que vous voulez recevoir <span style="color:#f87171;">*</span></label>
+<input type="text" name="receiveCrypto" placeholder="Ex: USDT, ETH, BTC" required>
+
+<button type="submit">Publier mon Asset</button>
+</form>
+</div>
+
+<footer>
+© 2025 DEV FOUNDATION
+</footer>
+
+<script>
+// Toggle menu
+function toggleMenu() {
+  const menu = document.getElementById("menu");
+  menu.style.display = menu.style.display==="block" ? "none" : "block";
+}
+
+// Formulaire : pour l'instant juste alerte
+document.getElementById('publishForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  alert("Asset publié ! (paiement crypto + 1% DEV FOUNDATION à configurer avec NOWPayments)");
+});
+</script>
+
+</body>
+</html>

@@ -6,98 +6,93 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-
-body{
-font-family:Arial, sans-serif;
-background:#0f172a;
-color:#e5e7eb;
-margin:0;
+body {
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: #e5e7eb;
+  margin: 0;
+  padding: 0;
 }
 
 /* HEADER */
-
-header{
-background:#0b1220;
-padding:20px;
-text-align:center;
+header {
+  background: #0b1220;
+  padding: 20px;
+  text-align: center;
 }
 
 /* MENU */
-
-.menu-bar{
-background:#111827;
-padding:10px;
+.menu-bar {
+  background: #111827;
+  padding: 10px;
+  text-align: center;
 }
 
-.menu-btn{
-background:#22c55e;
-border:none;
-padding:10px 15px;
-border-radius:8px;
-cursor:pointer;
-font-size:16px;
+.menu-btn {
+  background: #22c55e;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
-.menu-content{
-display:none;
-background:#020617;
-margin-top:10px;
-padding:10px;
-border-radius:8px;
+.menu-content {
+  display: none;
+  background: #020617;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
 }
 
-.menu-content a{
-display:block;
-color:#22c55e;
-text-decoration:none;
-padding:6px 0;
+.menu-content a {
+  display: block;
+  color: #22c55e;
+  text-decoration: none;
+  padding: 6px 0;
 }
 
 /* SEARCH */
-
-.search{
-text-align:center;
-margin:30px 0;
+.search {
+  text-align: center;
+  margin: 30px 0;
 }
 
-.search input{
-width:80%;
-max-width:400px;
-padding:10px;
-border:none;
-border-radius:8px;
-font-size:16px;
+.search input {
+  width: 80%;
+  max-width: 400px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
 }
 
 /* MARKETPLACE */
-
-.marketplace{
-max-width:900px;
-margin:auto;
-padding:20px;
+.marketplace {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
 }
 
-.card{
-background:#111827;
-border-radius:12px;
-padding:20px;
-margin-bottom:20px;
+.card {
+  background: #111827;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
-.card h3{
-margin-top:0;
-color:#22c55e;
+.card h3 {
+  margin-top: 0;
+  color: #22c55e;
 }
 
 /* FOOTER */
-
-footer{
-background:#0b1220;
-text-align:center;
-padding:20px;
-margin-top:40px;
+footer {
+  background: #0b1220;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
 }
-
 </style>
 </head>
 
@@ -109,14 +104,11 @@ margin-top:40px;
 </header>
 
 <div class="menu-bar">
-
 <button class="menu-btn" onclick="toggleMenu()">☰ Menu</button>
-
 <div id="menu" class="menu-content">
 <a href="index.html">Accueil</a>
 <a href="contact.html">Contact</a>
 </div>
-
 </div>
 
 <div class="search">
@@ -147,30 +139,20 @@ margin-top:40px;
 </footer>
 
 <script>
-
 function toggleMenu(){
 const menu=document.getElementById("menu");
 menu.style.display = menu.style.display==="block" ? "none" : "block";
 }
 
 function searchTexture(){
-
 const input=document.getElementById("searchInput").value.toLowerCase();
 const cards=document.querySelectorAll(".card");
 
 cards.forEach(card=>{
 const name=card.dataset.name.toLowerCase();
-
-if(name.includes(input)){
-card.style.display="block";
-}else{
-card.style.display="none";
-}
-
+card.style.display = name.includes(input) ? "block" : "none";
 });
-
 }
-
 </script>
 
 </body>

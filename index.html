@@ -6,182 +6,162 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: #0f172a;
-  color: #e5e7eb;
-  margin: 0;
-  display: flex;
-  min-height: 100vh;
+body{
+font-family:Arial,sans-serif;
+background:#0f172a;
+color:#e5e7eb;
+margin:0;
+display:flex;
+min-height:100vh;
 }
 
-/* MENU VERTICAL */
-nav {
-  width: 220px;
-  background: #111827;
-  padding: 20px 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
+/* MENU */
+nav{
+width:230px;
+background:#111827;
+padding:20px;
+display:flex;
+flex-direction:column;
 }
 
-/* Barre de recherche */
-#search-bar {
-  width: 90%;
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: none;
-  margin-bottom: 20px;
-  font-size: 16px;
+/* Barre recherche */
+#search-bar{
+width:100%;
+padding:10px;
+border-radius:8px;
+border:none;
+margin-bottom:20px;
+font-size:16px;
 }
 
-/* Liens du menu */
-nav a {
-  color: #22c55e;
-  text-decoration: none;
-  font-weight: bold;
-  margin: 12px 0;
-  font-size: 18px;
-  width: 100%;
-  text-align: center;
-  cursor: pointer;
+/* Liens menu */
+nav a{
+color:#22c55e;
+text-decoration:none;
+font-weight:bold;
+margin:10px 0;
+font-size:18px;
+padding:8px;
+border-radius:6px;
 }
 
-nav a:hover {
-  text-decoration: underline;
+nav a:hover{
+background:#1f2937;
 }
 
-/* Partie personnalisable */
-#custom-menu {
-  display: none;
-  margin-top: 20px;
-  width: 100%;
-  background: #111827;
-  border-top: 1px solid #22c55e;
-  padding: 10px 0;
-  text-align: center;
-  border-radius: 8px;
+/* Menu personnalisable */
+#custom-menu{
+display:none;
+margin-top:15px;
+padding-top:10px;
+border-top:1px solid #22c55e;
 }
 
-.sub-section {
-  display: none;
-  margin-top: 10px;
-  background: #1f2937;
-  border-radius: 8px;
-  padding: 10px;
-  font-size: 16px;
-  color: #94a3b8;
+.sub-section{
+display:none;
+margin-top:10px;
+background:#1f2937;
+border-radius:8px;
+padding:10px;
 }
 
-.sub-section a {
-  display: block;
-  margin: 5px 0;
-  color: #22c55e;
-  text-decoration: none;
+.sub-section a{
+display:block;
+margin:6px 0;
 }
 
-.sub-section a:hover {
-  text-decoration: underline;
+/* Contenu */
+.main-content{
+flex:1;
+padding:40px;
 }
 
-/* CONTENU PRINCIPAL */
-.main-content {
-  flex: 1;
-  padding: 40px 20px;
+/* Header */
+header{
+text-align:center;
 }
 
-/* HEADER */
-header {
-  text-align: center;
-  padding-bottom: 40px;
+header h1{
+font-size:36px;
+margin:0;
 }
 
-header h1 {
-  margin: 0;
-  font-size: 36px;
+header p{
+color:#94a3b8;
+font-size:20px;
 }
 
-header p {
-  color: #94a3b8;
-  font-size: 20px;
-  margin-top: 10px;
-}
-
-/* FOOTER */
-footer {
-  text-align: center;
-  padding: 20px;
-  background: #0b1220;
-  margin-top: 50px;
-  color: #94a3b8;
+/* Footer */
+footer{
+text-align:center;
+margin-top:50px;
+color:#94a3b8;
 }
 </style>
 </head>
 
 <body>
 
-<!-- MENU VERTICAL -->
 <nav>
-  <input type="text" id="search-bar" placeholder="Rechercher...">
-  <a href="#accueil">Accueil</a>
-  <a href="textures.html">Textures Marketplace</a>
-  <a href="#contact">Contact</a>
-  <a id="custom-toggle">Personnaliser le menu</a>
 
-  <!-- Partie personnalisable -->
-  <div id="custom-menu">
-    <p>Outils en cours de développement</p>
+<input type="text" id="search-bar" placeholder="Rechercher...">
 
-    <div class="sub-section" id="future-tools">
-      <a href="asset-tool.html">Assets & Textures 3D</a>
-      <a href="seamless-tool.html">Outil Seamless</a>
-      <a href="assistant.html">Assistant IA</a>
-    </div>
+<a href="#accueil">Accueil</a>
 
-    <button onclick="toggleFutureTools()">Afficher / Masquer les outils</button>
-  </div>
+<a href="textures.html">Textures Marketplace</a>
+
+<a href="#contact">Contact</a>
+
+<a id="custom-toggle">Personnaliser le menu</a>
+
+<div id="custom-menu">
+
+<p>Outils en cours de développement</p>
+
+<div class="sub-section" id="future-tools">
+<a href="asset-tool.html">Assets & Textures 3D</a>
+<a href="seamless-tool.html">Outil Seamless</a>
+<a href="assistant.html">Assistant IA</a>
+</div>
+
+<button onclick="toggleFutureTools()">Afficher / Masquer les outils</button>
+
+</div>
+
 </nav>
 
 <div class="main-content">
 
 <header id="accueil">
-  <h1>DEV FOUNDATION</h1>
-  <p>Le marketplace qui évolue grâce à vous</p>
+<h1>DEV FOUNDATION</h1>
+<p>Le marketplace qui évolue grâce à vous</p>
 </header>
 
 <footer id="contact">
-  © 2025 DEV FOUNDATION | Contact: dev.foundation.contact@gmail.com
+© 2025 DEV FOUNDATION | Contact: dev.foundation.contact@gmail.com
 </footer>
 
+</div>
+
 <script>
-// Toggle partie personnalisable principale
-const customToggle = document.getElementById('custom-toggle');
-const customMenu = document.getElementById('custom-menu');
 
-customToggle.addEventListener('click', () => {
-  customMenu.style.display = (customMenu.style.display === 'none' || customMenu.style.display === '') ? 'block' : 'none';
-});
+const customToggle=document.getElementById("custom-toggle");
+const customMenu=document.getElementById("custom-menu");
 
-// Toggle future tools
-function toggleFutureTools() {
-  const future = document.getElementById('future-tools');
-  future.style.display = (future.style.display === 'none' || future.style.display === '') ? 'block' : 'none';
+customToggle.onclick=()=>{
+customMenu.style.display=
+customMenu.style.display==="block"?"none":"block";
+};
+
+function toggleFutureTools(){
+
+const future=document.getElementById("future-tools");
+
+future.style.display=
+future.style.display==="block"?"none":"block";
+
 }
 
-// Recherche simple du menu
-const searchBar = document.getElementById('search-bar');
-searchBar.addEventListener('input', () => {
-  const filter = searchBar.value.toLowerCase();
-  const links = document.querySelectorAll('nav a:not(#custom-toggle)');
-  links.forEach(link => {
-    if (link.textContent.toLowerCase().includes(filter)) {
-      link.style.display = 'block';
-    } else {
-      link.style.display = 'none';
-    }
-  });
-});
 </script>
 
 </body>

@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>AI Game Assets Shop</title>
+<title>DEV Foundation</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -27,46 +27,51 @@ header p {
   color: #94a3b8;
 }
 
-nav {
-  text-align: center;
-  padding: 15px;
-  background: #111827;
+#menu-button {
+  display: block;
+  background: #22c55e;
+  color: #020617;
+  border: none;
+  padding: 12px 20px;
+  margin: 10px auto;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-nav a {
+#menu-content {
+  max-width: 300px;
+  margin: 0 auto 20px auto;
+  background: #111827;
+  border-radius: 12px;
+  padding: 10px;
+  display: none;
+}
+
+#menu-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#menu-content ul li {
+  padding: 10px 0;
+  text-align: center;
+}
+
+#menu-content ul li a {
   color: #22c55e;
   text-decoration: none;
   font-weight: bold;
-  margin: 0 12px;
 }
 
-nav a:hover {
+#menu-content ul li a:hover {
   text-decoration: underline;
 }
 
 .section-title {
   text-align: center;
   margin: 40px 0 20px;
-}
-
-.filters {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.filters button {
-  background: #22c55e;
-  color: #020617;
-  border: none;
-  padding: 10px 15px;
-  margin: 5px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.filters button:hover {
-  background: #16a34a;
 }
 
 .tools-container {
@@ -109,6 +114,7 @@ nav a:hover {
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .price {
@@ -144,26 +150,22 @@ footer {
 <body>
 
 <header>
-  <h1>AI Game Assets Shop</h1>
+  <h1>DEV Foundation</h1>
   <p>Textures & Assets payables en crypto</p>
 </header>
 
-<!-- MENU -->
-<nav>
-  <a href="index.html">Accueil</a>
-  <a href="textures.html">Textures</a>
-  <a href="asset-tool.html">Asset + Texture 3D</a>
-  <a href="seamless-tool.html">Seamless Tool</a>
-  <a href="assistant.html">Assistant IA</a>
-</nav>
-
-<h2 class="section-title">Nos Outils</h2>
-
-<div class="filters">
-  <button onclick="filterTools('all')">Tous</button>
-  <button onclick="filterTools('assistant')">Assistant IA</button>
-  <button onclick="filterTools('tool')">Outils</button>
+<!-- MENU BOUTON -->
+<button id="menu-button">Menu ☰</button>
+<div id="menu-content">
+  <ul>
+    <li><a href="#assets">Assets / Textures 3D</a></li>
+    <li><a href="#paiement">Paiement Crypto</a></li>
+    <li><a href="#about">À propos</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
 </div>
+
+<h2 class="section-title" id="assets">Nos Outils</h2>
 
 <div class="tools-container">
 
@@ -187,7 +189,7 @@ footer {
 
 </div>
 
-<h2 class="section-title">Produit en vedette</h2>
+<h2 class="section-title" id="paiement">Produit en vedette</h2>
 
 <div class="marketplace">
   <div class="card">
@@ -195,18 +197,30 @@ footer {
     <p>Textures réalistes pour Unity, Unreal, jeux mobiles.</p>
     <p class="price">Prix : 0,05 USDT</p>
 
-    <button class="buy-btn"
-      onclick="alert('Système de paiement crypto automatique bientôt disponible')">
+    <!-- Bouton d'achat dynamique -->
+    <button class="buy-btn" onclick="window.open('https://nowpayments.io/embeds/payment-widget?iid=4754618608','_blank')">
       Acheter maintenant
     </button>
   </div>
 </div>
 
-<footer>
-  © 2025 AI Game Assets Shop
+<!-- WIDGET NOWPayments directement intégré -->
+<iframe src="https://nowpayments.io/embeds/payment-widget?iid=4754618608" width="410" height="696" frameborder="0" scrolling="no" style="overflow-y: hidden;"></iframe>
+
+<footer id="contact">
+  © 2025 DEV Foundation | Contact: dev.foundation.contact@gmail.com
 </footer>
 
 <script>
+// Script menu toggle
+const menuButton = document.getElementById('menu-button');
+const menuContent = document.getElementById('menu-content');
+
+menuButton.addEventListener('click', () => {
+  menuContent.style.display = (menuContent.style.display === 'none') ? 'block' : 'none';
+});
+
+// Filtrage outils (comme avant)
 function filterTools(category) {
   const tools = document.querySelectorAll('.tool-card');
 
@@ -223,7 +237,4 @@ function filterTools(category) {
 </script>
 
 </body>
-  <iframe src="https://nowpayments.io/embeds/payment-widget?iid=4754618608" width="410" height="696" frameborder="0" scrolling="no" style="overflow-y: hidden;">
-    Impossible de charger le widget
-  </iframe>
   </html>

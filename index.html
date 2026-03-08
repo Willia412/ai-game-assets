@@ -17,24 +17,75 @@ body {
 
 /* MENU VERTICAL */
 nav {
-  width: 200px;
+  width: 220px;
   background: #111827;
-  padding-top: 20px;
+  padding: 20px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
+/* Barre de recherche */
+#search-bar {
+  width: 90%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+/* Liens du menu */
 nav a {
   color: #22c55e;
   text-decoration: none;
   font-weight: bold;
-  margin: 15px 0;
+  margin: 12px 0;
   font-size: 18px;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
 }
 
 nav a:hover {
   text-decoration: underline;
+}
+
+/* Partie personnalisable */
+#custom-menu {
+  display: none;
+  margin-top: 20px;
+  width: 100%;
+  background: #111827;
+  border-top: 1px solid #22c55e;
+  padding: 10px 0;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.sub-section {
+  display: none;
+  margin-top: 10px;
+  background: #1f2937;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 16px;
+  color: #94a3b8;
+}
+
+.sub-section button {
+  background: #22c55e;
+  border: none;
+  color: #020617;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.sub-section button:hover {
+  background: #16a34a;
 }
 
 /* CONTENU PRINCIPAL */
@@ -43,7 +94,7 @@ nav a:hover {
   padding: 40px 20px;
 }
 
-/* TITRE */
+/* HEADER */
 header {
   text-align: center;
   padding-bottom: 40px;
@@ -112,15 +163,35 @@ footer {
 
 <!-- MENU VERTICAL -->
 <nav>
+  <input type="text" id="search-bar" placeholder="Rechercher...">
   <a href="#accueil">Accueil</a>
   <a href="#marketplace">Marketplace</a>
   <a href="#contact">Contact</a>
+  <a id="custom-toggle">Personnaliser le menu</a>
+
+  <!-- Partie personnalisable -->
+  <div id="custom-menu">
+    <p>Outils en cours de développement</p>
+
+    <div class="sub-section" id="future-tools">
+      <button onclick="toggleSub('assets')">Assets & Textures 3D</button>
+      <div id="assets" style="display:none;">Section en développement...</div>
+
+      <button onclick="toggleSub('seamless')">Outil Seamless</button>
+      <div id="seamless" style="display:none;">Section en développement...</div>
+
+      <button onclick="toggleSub('assistant')">Assistant IA</button>
+      <div id="assistant" style="display:none;">Section en développement...</div>
+    </div>
+
+    <button onclick="toggleFutureTools()">Afficher / Masquer les outils</button>
+  </div>
 </nav>
 
 <div class="main-content">
 
 <header id="accueil">
-  <h1>Bienvenue sur DEV FOUNDATION</h1>
+  <h1>DEV FOUNDATION</h1>
   <p>Le marketplace qui évolue grâce à vous</p>
 </header>
 
@@ -141,7 +212,41 @@ footer {
   © 2025 DEV FOUNDATION | Contact: dev.foundation.contact@gmail.com
 </footer>
 
-</div>
+<script>
+// Toggle partie personnalisable principale
+const customToggle = document.getElementById('custom-toggle');
+const customMenu = document.getElementById('custom-menu');
+
+customToggle.addEventListener('click', () => {
+  customMenu.style.display = (customMenu.style.display === 'none' || customMenu.style.display === '') ? 'block' : 'none';
+});
+
+// Toggle future tools
+function toggleFutureTools() {
+  const future = document.getElementById('future-tools');
+  future.style.display = (future.style.display === 'none' || future.style.display === '') ? 'block' : 'none';
+}
+
+// Toggle sous-section d’un outil
+function toggleSub(id) {
+  const elem = document.getElementById(id);
+  elem.style.display = (elem.style.display === 'none' || elem.style.display === '') ? 'block' : 'none';
+}
+
+// Recherche simple du menu
+const searchBar = document.getElementById('search-bar');
+searchBar.addEventListener('input', () => {
+  const filter = searchBar.value.toLowerCase();
+  const links = document.querySelectorAll('nav a:not(#custom-toggle)');
+  links.forEach(link => {
+    if (link.textContent.toLowerCase().includes(filter)) {
+      link.style.display = 'block';
+    } else {
+      link.style.display = 'none';
+    }
+  });
+});
+</script>
 
 </body>
-</html>
+        </html>

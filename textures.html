@@ -2,91 +2,126 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>DEV STOCK SHOP - Texture</title>
+<title>DEV STOCK SHOP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-
-body{
-font-family: Arial, sans-serif;
-margin:0;
-background:#f4f4f4;
+body {
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: #e5e7eb;
+  margin: 0;
+  padding: 0;
 }
 
-/* Barre du haut */
-
-.topbar{
-display:flex;
-align-items:center;
-justify-content:space-between;
-background:#111;
-color:white;
-padding:10px 20px;
+/* HEADER */
+header {
+  background: #0b1220;
+  padding: 40px 20px;
+  text-align: center;
 }
 
-.logo{
-font-size:18px;
-font-weight:bold;
+header h1 {
+  margin: 0;
+  font-size: 36px;
 }
 
-/* Bouton menu */
-
-.menu-btn{
-background:none;
-border:none;
-color:white;
-font-size:18px;
-cursor:pointer;
+header p {
+  color: #94a3b8;
+  font-size: 20px;
+  margin-top: 10px;
 }
 
-/* Menu déroulant */
-
-.menu{
-display:none;
-position:absolute;
-top:50px;
-right:20px;
-background:white;
-border:1px solid #ccc;
+/* MENU */
+.menu-bar {
+  background: #111827;
+  padding: 10px;
+  text-align: center;
 }
 
-.menu a{
-display:block;
-padding:10px 20px;
-text-decoration:none;
-color:black;
+.menu-btn {
+  background: #22c55e;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
-.menu a:hover{
-background:#eee;
+.menu-content {
+  display: none;
+  background: #020617;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
 }
 
-/* Barre recherche */
-
-.search{
-padding:20px;
-text-align:center;
+.menu-content a {
+  display: block;
+  color: #22c55e;
+  text-decoration: none;
+  padding: 6px 0;
 }
 
-.search input{
-width:60%;
-padding:10px;
-font-size:16px;
+/* SEARCH */
+.search {
+  text-align: center;
+  margin: 20px 0;
 }
 
-/* Grille textures */
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
-gap:20px;
-padding:20px;
+.search input {
+  width: 80%;
+  max-width: 400px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
 }
 
-.card{
-background:white;
-height:150px;
-border-radius:6px;
-box-shadow:0 2px 5px rgba(0,0,0,0.1);
+/* FILTRES HORIZONTAUX */
+.filters {
+  display: flex;
+  overflow-x: auto;
+  padding: 10px 20px;
+  gap: 10px;
+}
+
+.filters button {
+  background: #22c55e;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.filters button:hover {
+  background: #16a34a;
+}
+
+/* GRILLE ASSETS */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  background: #111827;
+  height: 150px;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* FOOTER */
+footer {
+  background: #0b1220;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
 }
 
 </style>
@@ -94,45 +129,67 @@ box-shadow:0 2px 5px rgba(0,0,0,0.1);
 
 <body>
 
-<div class="topbar">
-<div class="logo">DEV STOCK SHOP</div>
+<header>
+<h1>DEV STOCK SHOP</h1>
+<p>Le marketplace qui évolue grâce à vous</p>
+</header>
 
+<div class="menu-bar">
 <button class="menu-btn" onclick="toggleMenu()">☰ Menu</button>
-
-<div class="menu" id="menu">
+<div id="menu" class="menu-content">
 <a href="index.html">Accueil</a>
 <a href="contact.html">Contact</a>
 </div>
-
 </div>
 
 <div class="search">
-<input type="text" placeholder="Rechercher texture...">
+<input type="text" id="searchInput" placeholder="Rechercher vos assets...">
 </div>
 
-<div class="grid">
-
-<div class="card"></div>
-<div class="card"></div>
-<div class="card"></div>
-<div class="card"></div>
-<div class="card"></div>
-<div class="card"></div>
-
+<!-- FILTRES HORIZONTAUX -->
+<div class="filters">
+<button onclick="filterCategory('all')">Tout</button>
+<button onclick="filterCategory('gratuit')">Gratuit</button>
+<button onclick="filterCategory('premium')">Premium</button>
+<button onclick="filterCategory('ia')">Type IA</button>
+<button onclick="filterCategory('texture')">Texture</button>
+<button onclick="filterCategory('musique')">Musique</button>
+<button onclick="filterCategory('animation')">Animation</button>
+<button onclick="filterCategory('projet')">Projet non terminé</button>
+<button onclick="filterCategory('photo')">Photo brute</button>
 </div>
+
+<!-- GRILLE ASSETS (vide pour l'instant) -->
+<div class="grid" id="grid">
+<div class="card"></div>
+<div class="card"></div>
+<div class="card"></div>
+<div class="card"></div>
+</div>
+
+<footer>
+© 2025 DEV FOUNDATION
+</footer>
 
 <script>
+// Toggle menu
+function toggleMenu() {
+  const menu = document.getElementById("menu");
+  menu.style.display = menu.style.display==="block" ? "none" : "block";
+}
 
-function toggleMenu(){
-let menu=document.getElementById("menu");
-if(menu.style.display==="block"){
-menu.style.display="none";
-}else{
-menu.style.display="block";
+// Filtrage assets (pour l'instant vide)
+function filterCategory(cat) {
+  alert("Filtrage : " + cat + " (fonction à connecter avec tes assets)");
 }
-}
+
+// Recherche simple
+const searchInput = document.getElementById("searchInput");
+searchInput.addEventListener("input", () => {
+  // futur code de filtrage dynamique
+});
 
 </script>
 
 </body>
-</html>
+  </html>

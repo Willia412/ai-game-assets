@@ -1,123 +1,118 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!DOCTYPE html><html lang="fr">
 <head>
 <meta charset="UTF-8">
 <title>DEV FOUNDATION</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
 
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background: #0f172a;
-  color: #e5e7eb;
-  margin: 0;
-  padding: 0;
+body{
+font-family:Arial, sans-serif;
+background:#0f172a;
+color:#e5e7eb;
+margin:0;
+padding:0;
 }
 
 /* HEADER */
-header {
-  background: #0b1220;
-  padding: 40px 20px;
-  text-align: center;
+
+header{
+background:#0b1220;
+padding:40px 20px;
+text-align:center;
 }
 
-header h1 {
-  margin: 0;
-  font-size: 36px;
+header h1{
+margin:0;
+font-size:36px;
 }
 
-header p {
-  color: #94a3b8;
-  font-size: 20px;
-  margin-top: 10px;
+header p{
+color:#94a3b8;
+font-size:20px;
+margin-top:10px;
 }
 
 /* MENU */
-.menu-bar {
-  background: #111827;
-  padding: 10px;
-  text-align: center;
+
+.menu-bar{
+background:#111827;
+padding:10px;
+text-align:center;
 }
 
-.menu-btn {
-  background: #22c55e;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
+.menu-btn{
+background:#22c55e;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+font-size:16px;
 }
 
-.menu-content {
-  display: none;
-  background: #020617;
-  margin-top: 10px;
-  padding: 10px;
-  border-radius: 8px;
+.menu-content{
+display:none;
+background:#020617;
+margin-top:10px;
+padding:10px;
+border-radius:8px;
 }
 
-.menu-content a {
-  display: block;
-  color: #22c55e;
-  text-decoration: none;
-  padding: 6px 0;
+.menu-content a{
+display:block;
+color:#22c55e;
+text-decoration:none;
+padding:8px 0;
+font-size:16px;
 }
 
 /* SEARCH */
-.search {
-  text-align: center;
-  margin: 30px 0;
+
+.search{
+text-align:center;
+margin:30px 0;
 }
 
-.search input {
-  width: 80%;
-  max-width: 400px;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
+.search input{
+width:80%;
+max-width:400px;
+padding:10px;
+border:none;
+border-radius:8px;
+font-size:16px;
 }
 
 /* FOOTER */
-footer {
-  background: #0b1220;
-  text-align: center;
-  padding: 20px;
-  margin-top: 40px;
+
+footer{
+background:#0b1220;
+text-align:center;
+padding:20px;
+margin-top:40px;
 }
-</style>
-</head>
 
-<body>
-
-<header>
+</style></head><body><header>
 <h1>DEV FOUNDATION</h1>
 <p>Le marketplace qui évolue grâce à vous</p>
-</header>
+</header><div class="menu-bar"><button class="menu-btn" onclick="toggleMenu()">☰ Menu</button>
 
-<div class="menu-bar">
-<button class="menu-btn" onclick="toggleMenu()">☰ Menu</button>
-<div id="menu" class="menu-content">
-<a href="index.html">Accueil</a>
+<div id="menu" class="menu-content"><a href="index.html">Accueil</a>
+
+<a href="textures.html">DEV STOCK SHOP</a>
+
+<a href="publish.html">Publier un Asset</a>
+
 <a href="contact.html">Contact</a>
-<a href="textures.html">Textures Marketplace</a>
-</div>
-</div>
 
-<div class="search">
-<input type="text" id="searchInput" placeholder="Rechercher...">
-</div>
+</div></div><div class="search"><input type="text" id="searchInput" placeholder="Rechercher des assets, textures, audio, animations..."></div><footer>© 2025 DEV FOUNDATION
 
-<footer>
-© 2025 DEV FOUNDATION
-</footer>
+</footer><script>
 
-<script>
 function toggleMenu(){
-const menu=document.getElementById("menu");
-menu.style.display = menu.style.display==="block" ? "none" : "block";
-}
-</script>
 
-</body>
+const menu=document.getElementById("menu");
+
+menu.style.display = menu.style.display==="block" ? "none" : "block";
+
+}
+
+</script></body>
 </html>

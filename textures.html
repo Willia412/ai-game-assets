@@ -1,8 +1,11 @@
-<!DOCTYPE html><html lang="fr">
+<!DOCTYPE html>
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <title>DEV STOCK SHOP</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
 
 body{
 font-family:Arial, sans-serif;
@@ -91,7 +94,7 @@ cursor:pointer;
 white-space:nowrap;
 }
 
-/* BOUTON LISTING */
+/* LISTING BUTTON */
 
 .listing-toggle{
 position:fixed;
@@ -104,8 +107,6 @@ border-radius:8px;
 cursor:pointer;
 z-index:10;
 }
-
-/* MENU LISTING */
 
 .listing{
 position:fixed;
@@ -148,11 +149,6 @@ padding:10px;
 text-align:center;
 }
 
-.card img{
-width:100%;
-border-radius:6px;
-}
-
 .card h4{
 margin:8px 0;
 }
@@ -181,39 +177,78 @@ padding:20px;
 margin-top:40px;
 }
 
-</style></head><body><header>
+</style>
+</head>
+
+<body>
+
+<header>
 <h1>DEV STOCK SHOP</h1>
 <p>Le marketplace qui évolue grâce à vous</p>
-</header><div class="menu-bar">
-<button class="menu-btn" onclick="toggleMenu()">☰ Menu</button><div id="menu" class="menu-content">
+</header>
+
+<div class="menu-bar">
+
+<button class="menu-btn" onclick="toggleMenu()">☰ Menu</button>
+
+<div id="menu" class="menu-content">
 <a href="index.html">Accueil</a>
 <a href="contact.html">Contact</a>
 <a href="publish.html">Publier un Asset</a>
 </div>
-</div><div class="search">
+
+</div>
+
+<div class="search">
 <input type="text" id="searchInput" placeholder="Rechercher vos assets...">
-</div><div class="filters"><button onclick="setFilter('all')">Tout</button>
-<button onclick="setFilter('gratuit')">Gratuit</button>
+</div>
+
+<div class="filters">
+
+<button onclick="setFilter('all')">Tout</button>
+<button onclick="setFilter('free')">Gratuit</button>
 <button onclick="setFilter('premium')">Premium</button>
-<button onclick="setFilter('ia')">Type IA</button>
 <button onclick="setFilter('texture')">Texture</button>
-<button onclick="setFilter('musique')">Musique</button>
+<button onclick="setFilter('audio')">Audio</button>
 <button onclick="setFilter('animation')">Animation</button>
-<button onclick="setFilter('projet')">Projet</button>
-<button onclick="setFilter('photo')">Photo</button>
 
-</div><button class="listing-toggle" onclick="toggleListing()">Formats</button>
+</div>
 
-<div id="listing" class="listing"><button onclick="setListing('3D')">3D</button>
-<button onclick="setListing('2D')">2D</button>
+<button class="listing-toggle" onclick="toggleListing()">Formats</button>
+
+<div id="listing" class="listing">
+
+<button onclick="setListing('2d')">2D</button>
+<button onclick="setListing('3d')">3D</button>
 <button onclick="setListing('PNG')">PNG</button>
 <button onclick="setListing('MP3')">MP3</button>
-<button onclick="setListing('Blend')">Blend</button>
-<button onclick="setListing('Autre')">Autre</button>
 
-</div><div class="grid" id="grid"></div><footer>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<footer>
 © 2025 DEV FOUNDATION
-</footer><script>
+</footer>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyA5YO60-A0IH5gZFRXCNtj-gg1AyW2-T_U",
+authDomain: "dev-foundation.firebaseapp.com",
+projectId: "dev-foundation",
+storageBucket: "dev-foundation.firebasestorage.app",
+messagingSenderId: "1089648631721",
+appId: "1:1089648631721:web:d9932e4606240aedc16eb8"
+
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 function toggleMenu(){
 const menu=document.getElementById("menu");
@@ -239,34 +274,36 @@ displayAssets();
 }
 
 const searchInput=document.getElementById("searchInput");
-
 searchInput.addEventListener("input",displayAssets);
 
-function displayAssets(){
+async function displayAssets(){
 
 const grid=document.getElementById("grid");
 grid.innerHTML='';
 
-const assets=JSON.parse(localStorage.getItem('assets'))||[];
+const querySnapshot = await getDocs(collection(db,"assets"));
 
 const searchTerm=searchInput.value.toLowerCase();
 
-assets.forEach(asset=>{
+querySnapshot.forEach((doc)=>{
 
-if((filterCategoryValue==='all'||asset.category===filterCategoryValue)&&
-(filterListingValue==='all'||asset.format===filterListingValue)&&
-(asset.name.toLowerCase().includes(searchTerm)||asset.shopName.toLowerCase().includes(searchTerm))){
+const asset = doc.data();
+
+if((filterCategoryValue==='all'||asset.category===filterCategoryValue||asset.price===filterCategoryValue)&&
+(filterListingValue==='all'||asset.type===filterListingValue)&&
+(asset.name.toLowerCase().includes(searchTerm)||asset.shop.toLowerCase().includes(searchTerm))){
 
 const card=document.createElement('div');
 card.className='card';
 
 card.innerHTML=`
-<img src="${asset.preview}">
+
 <h4>${asset.name}</h4>
 <p>${asset.category} • ${asset.format}</p>
 <p>Prix : ${asset.price}</p>
-<button>Télécharger</button>
 <p>${asset.creation}</p>
+<button>Télécharger</button>
+
 `;
 
 grid.appendChild(card);
@@ -279,5 +316,7 @@ grid.appendChild(card);
 
 displayAssets();
 
-</script></body>
+</script>
+
+</body>
   </html>

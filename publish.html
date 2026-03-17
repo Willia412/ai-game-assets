@@ -1,8 +1,11 @@
-<!DOCTYPE html><html lang="fr">
+<!DOCTYPE html>
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <title>Publier un Asset - DEV STOCK SHOP</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
 
 body{
 font-family:Arial,sans-serif;
@@ -11,8 +14,6 @@ color:#e5e7eb;
 margin:0;
 padding:0;
 }
-
-/* HEADER */
 
 header{
 background:#0b1220;
@@ -30,8 +31,6 @@ color:#94a3b8;
 font-size:20px;
 margin-top:10px;
 }
-
-/* MENU */
 
 .menu-bar{
 background:#111827;
@@ -62,8 +61,6 @@ color:#22c55e;
 text-decoration:none;
 padding:8px 0;
 }
-
-/* FORM */
 
 .form-container{
 max-width:700px;
@@ -114,12 +111,6 @@ cursor:pointer;
 
 }
 
-.form-container button:hover{
-background:#16a34a;
-}
-
-/* FOOTER */
-
 footer{
 background:#0b1220;
 text-align:center;
@@ -127,17 +118,36 @@ padding:20px;
 margin-top:40px;
 }
 
-</style></head><body><header>
+</style>
+</head>
+
+<body>
+
+<header>
 <h1>DEV STOCK SHOP</h1>
 <p>Publier vos assets sur le marketplace</p>
-</header><div class="menu-bar"><button class="menu-btn" onclick="toggleMenu()">☰ Menu</button>
+</header>
 
-<div id="menu" class="menu-content"><a href="index.html">Accueil</a>
+<div class="menu-bar">
+
+<button class="menu-btn" onclick="toggleMenu()">☰ Menu</button>
+
+<div id="menu" class="menu-content">
+<a href="index.html">Accueil</a>
 <a href="textures.html">DEV STOCK SHOP</a>
 <a href="publish.html">Publier un Asset</a>
 <a href="contact.html">Contact</a>
+</div>
 
-</div></div><div class="form-container"><h2>Publier un Asset</h2><form id="publishForm"><label>Nom de la boutique *</label>
+</div>
+
+<div class="form-container">
+
+<h2>Publier un Asset</h2>
+
+<form id="publishForm">
+
+<label>Nom de la boutique *</label>
 <input type="text" id="shopName" required>
 
 <label>Nom de l’asset *</label>
@@ -145,45 +155,98 @@ margin-top:40px;
 
 <label>Catégorie *</label>
 
-<select id="category" required><option value="">Choisir</option>
+<select id="category" required>
+<option value="">Choisir</option>
 <option value="texture">Texture</option>
 <option value="audio">Audio</option>
 <option value="animation">Animation</option>
 <option value="system">Game System</option>
 <option value="prototype">Game Prototype</option>
-<option value="raw">Raw Photo</option></select><label>Type d’asset *</label>
+<option value="raw">Raw Photo</option>
+</select>
 
-<select id="assetType" required><option value="">Choisir</option>
+<label>Type d’asset *</label>
+
+<select id="assetType" required>
+<option value="">Choisir</option>
 <option value="2d">2D</option>
 <option value="3d">3D</option>
 <option value="audio">Audio</option>
-<option value="animation">Animation</option></select><label>Format du fichier *</label>
+<option value="animation">Animation</option>
+</select>
 
-<input type="text" id="fileFormat" placeholder="PNG, BLEND, FBX, MP3..." required><label>Création *</label>
+<label>Format du fichier *</label>
+<input type="text" id="fileFormat" required>
 
-<select id="creationType" required><option value="">Choisir</option>
+<label>Création *</label>
+
+<select id="creationType" required>
+<option value="">Choisir</option>
 <option value="ia">IA</option>
-<option value="manuel">Humain</option></select><label>Gratuit ou Premium *</label>
+<option value="manuel">Humain</option>
+</select>
 
-<select id="priceType" required><option value="">Choisir</option>
+<label>Gratuit ou Premium *</label>
+
+<select id="priceType" required>
+<option value="">Choisir</option>
 <option value="free">Gratuit</option>
-<option value="premium">Premium</option></select><label>Pack ou unique *</label>
+<option value="premium">Premium</option>
+</select>
 
-<select id="packType" required><option value="">Choisir</option>
+<label>Pack ou unique *</label>
+
+<select id="packType" required>
+<option value="">Choisir</option>
 <option value="pack">Pack</option>
-<option value="unique">Unique</option></select><label>Licence *</label>
+<option value="unique">Unique</option>
+</select>
 
-<input type="text" id="license" required><label>Description *</label>
+<label>Licence *</label>
+<input type="text" id="license" required>
 
-<textarea id="description" required></textarea><label>Email (optionnel)</label>
+<label>Description *</label>
+<textarea id="description" required></textarea>
 
-<input type="email" id="email"><label>Adresse crypto *</label>
+<label>Email (optionnel)</label>
+<input type="email" id="email">
 
-<input type="text" id="crypto" required><button type="submit">Publier mon Asset
+<label>Adresse crypto *</label>
+<input type="text" id="crypto" required>
 
-</button></form></div><footer>© 2025 DEV FOUNDATION
+<button type="submit">Publier mon Asset</button>
 
-</footer><script>
+</form>
+</div>
+
+<footer>
+© 2025 DEV FOUNDATION
+</footer>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyA5YO60-A0IH5gZFRXCNtj-gg1AyW2-T_U",
+
+authDomain: "dev-foundation.firebaseapp.com",
+
+projectId: "dev-foundation",
+
+storageBucket: "dev-foundation.firebasestorage.app",
+
+messagingSenderId: "1089648631721",
+
+appId: "1:1089648631721:web:d9932e4606240aedc16eb8"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
 
 function toggleMenu(){
 
@@ -193,9 +256,7 @@ menu.style.display = menu.style.display==="block" ? "none" : "block";
 
 }
 
-/* PUBLICATION */
-
-document.getElementById("publishForm").addEventListener("submit",function(e){
+document.getElementById("publishForm").addEventListener("submit", async function(e){
 
 e.preventDefault();
 
@@ -227,11 +288,7 @@ crypto:document.getElementById("crypto").value
 
 };
 
-let assets=JSON.parse(localStorage.getItem("devAssets")||"[]");
-
-assets.push(asset);
-
-localStorage.setItem("devAssets",JSON.stringify(assets));
+await addDoc(collection(db,"assets"),asset);
 
 alert("Asset publié avec succès !");
 
@@ -239,5 +296,7 @@ document.getElementById("publishForm").reset();
 
 });
 
-</script></body>
+</script>
+
+</body>
   </html>

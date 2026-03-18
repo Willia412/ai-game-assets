@@ -2,301 +2,164 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Publier un Asset - DEV STOCK SHOP</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Publish Asset</title>
 
 <style>
-
 body{
-font-family:Arial,sans-serif;
+font-family:Arial;
 background:#0f172a;
-color:#e5e7eb;
-margin:0;
-padding:0;
-}
-
-header{
-background:#0b1220;
-padding:40px 20px;
-text-align:center;
-}
-
-header h1{
-margin:0;
-font-size:36px;
-}
-
-header p{
-color:#94a3b8;
-font-size:20px;
-margin-top:10px;
-}
-
-.menu-bar{
-background:#111827;
-padding:10px;
-text-align:center;
-}
-
-.menu-btn{
-background:#22c55e;
-border:none;
-padding:10px 15px;
-border-radius:8px;
-cursor:pointer;
-font-size:16px;
-}
-
-.menu-content{
-display:none;
-background:#020617;
-margin-top:10px;
-padding:10px;
-border-radius:8px;
-}
-
-.menu-content a{
-display:block;
-color:#22c55e;
-text-decoration:none;
-padding:8px 0;
-}
-
-.form-container{
-max-width:700px;
-margin:auto;
-background:#111827;
-padding:30px;
-border-radius:10px;
-}
-
-.form-container label{
-display:block;
-margin-top:15px;
-font-weight:bold;
-}
-
-.form-container input,
-.form-container select,
-.form-container textarea{
-
-width:100%;
-padding:10px;
-margin-top:6px;
-border-radius:6px;
-border:none;
-font-size:16px;
-background:#1f2937;
-color:#e5e7eb;
-
-}
-
-.form-container textarea{
-resize:vertical;
-min-height:80px;
-}
-
-.form-container button{
-
-margin-top:20px;
-background:#22c55e;
-color:#020617;
-border:none;
-padding:12px;
-width:100%;
-font-size:18px;
-font-weight:bold;
-border-radius:8px;
-cursor:pointer;
-
-}
-
-footer{
-background:#0b1220;
-text-align:center;
+color:white;
 padding:20px;
-margin-top:40px;
 }
 
+input,select,textarea{
+display:block;
+margin:10px 0;
+padding:10px;
+width:100%;
+}
+
+button{
+padding:10px;
+background:#22c55e;
+border:none;
+color:white;
+cursor:pointer;
+}
+
+.hidden{
+display:none;
+}
 </style>
+
 </head>
 
 <body>
 
-<header>
-<h1>DEV STOCK SHOP</h1>
-<p>Publier vos assets sur le marketplace</p>
-</header>
+<h1>Publier un asset</h1>
 
-<div class="menu-bar">
-
-<button class="menu-btn" onclick="toggleMenu()">☰ Menu</button>
-
-<div id="menu" class="menu-content">
-<a href="index.html">Accueil</a>
-<a href="textures.html">DEV STOCK SHOP</a>
-<a href="publish.html">Publier un Asset</a>
-<a href="contact.html">Contact</a>
-</div>
-
-</div>
-
-<div class="form-container">
-
-<h2>Publier un Asset</h2>
-
-<form id="publishForm">
-
-<label>Nom de la boutique *</label>
-<input type="text" id="shopName" required>
-
-<label>Nom de l’asset *</label>
-<input type="text" id="assetName" required>
-
-<label>Catégorie *</label>
-
-<select id="category" required>
-<option value="">Choisir</option>
+<select id="assetType" onchange="changeForm()">
+<option value="">Choisir type</option>
+<option value="model">3D Model</option>
 <option value="texture">Texture</option>
 <option value="audio">Audio</option>
-<option value="animation">Animation</option>
-<option value="system">Game System</option>
-<option value="prototype">Game Prototype</option>
-<option value="raw">Raw Photo</option>
 </select>
 
-<label>Type d’asset *</label>
+<input id="name" placeholder="Nom">
+<textarea id="description" placeholder="Description"></textarea>
+<input id="category" placeholder="Catégorie">
+<input id="collection" placeholder="Collection">
 
-<select id="assetType" required>
-<option value="">Choisir</option>
-<option value="2d">2D</option>
-<option value="3d">3D</option>
-<option value="audio">Audio</option>
-<option value="animation">Animation</option>
+<input id="format" placeholder="Format fichier">
+<input id="weight" placeholder="Poids">
+<input id="email" placeholder="Email support">
+<input id="creation" placeholder="IA ou Manuel">
+
+<input id="crypto1" placeholder="Adresse crypto 1">
+<input id="crypto2" placeholder="Adresse crypto 2">
+
+<input id="price" placeholder="Prix">
+<input id="image" placeholder="Lien image">
+<input id="file" placeholder="Lien téléchargement">
+
+<!-- MODEL -->
+<div id="modelFields" class="hidden">
+<input id="poly" placeholder="Nombre de polygones">
+<select id="rigged">
+<option value="oui">Rigged</option>
+<option value="non">Non</option>
 </select>
-
-<label>Format du fichier *</label>
-<input type="text" id="fileFormat" required>
-
-<label>Création *</label>
-
-<select id="creationType" required>
-<option value="">Choisir</option>
-<option value="ia">IA</option>
-<option value="manuel">Humain</option>
+<select id="textureIncluded">
+<option value="oui">Texture incluse</option>
+<option value="non">Non</option>
 </select>
-
-<label>Gratuit ou Premium *</label>
-
-<select id="priceType" required>
-<option value="">Choisir</option>
-<option value="free">Gratuit</option>
-<option value="premium">Premium</option>
-</select>
-
-<label>Pack ou unique *</label>
-
-<select id="packType" required>
-<option value="">Choisir</option>
-<option value="pack">Pack</option>
-<option value="unique">Unique</option>
-</select>
-
-<label>Licence *</label>
-<input type="text" id="license" required>
-
-<label>Description *</label>
-<textarea id="description" required></textarea>
-
-<label>Email (optionnel)</label>
-<input type="email" id="email">
-
-<label>Adresse crypto *</label>
-<input type="text" id="crypto" required>
-
-<button type="submit">Publier mon Asset</button>
-
-</form>
 </div>
 
-<footer>
-© 2025 DEV FOUNDATION
-</footer>
+<!-- TEXTURE -->
+<div id="textureFields" class="hidden">
+<input id="resolution" placeholder="Résolution">
+<input id="mapType" placeholder="Type de map">
+<select id="seamless">
+<option value="oui">Seamless</option>
+<option value="non">Non</option>
+</select>
+</div>
+
+<!-- AUDIO -->
+<div id="audioFields" class="hidden">
+<input id="duration" placeholder="Durée">
+<select id="loop">
+<option value="oui">Loop</option>
+<option value="non">Non</option>
+</select>
+</div>
+
+<button onclick="publish()">Publier</button>
 
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-
-apiKey: "AIzaSyA5YO60-A0IH5gZFRXCNtj-gg1AyW2-T_U",
-
+apiKey: "AIzaSyA...",
 authDomain: "dev-foundation.firebaseapp.com",
-
 projectId: "dev-foundation",
-
 storageBucket: "dev-foundation.firebasestorage.app",
-
 messagingSenderId: "1089648631721",
-
 appId: "1:1089648631721:web:d9932e4606240aedc16eb8"
-
 };
 
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
 
-function toggleMenu(){
+window.changeForm = function(){
 
-const menu=document.getElementById("menu");
+document.getElementById("modelFields").classList.add("hidden");
+document.getElementById("textureFields").classList.add("hidden");
+document.getElementById("audioFields").classList.add("hidden");
 
-menu.style.display = menu.style.display==="block" ? "none" : "block";
+let type=document.getElementById("assetType").value;
+
+if(type==="model") document.getElementById("modelFields").classList.remove("hidden");
+if(type==="texture") document.getElementById("textureFields").classList.remove("hidden");
+if(type==="audio") document.getElementById("audioFields").classList.remove("hidden");
 
 }
 
-document.getElementById("publishForm").addEventListener("submit", async function(e){
-
-e.preventDefault();
+window.publish = async function(){
 
 let asset={
-
-shop:document.getElementById("shopName").value,
-
-name:document.getElementById("assetName").value,
-
-category:document.getElementById("category").value,
-
-type:document.getElementById("assetType").value,
-
-format:document.getElementById("fileFormat").value,
-
-creation:document.getElementById("creationType").value,
-
-price:document.getElementById("priceType").value,
-
-pack:document.getElementById("packType").value,
-
-license:document.getElementById("license").value,
-
-description:document.getElementById("description").value,
-
-email:document.getElementById("email").value,
-
-crypto:document.getElementById("crypto").value
-
+type:assetType.value,
+name:name.value,
+description:description.value,
+category:category.value,
+collection:collection.value,
+format:format.value,
+weight:weight.value,
+email:email.value,
+creation:creation.value,
+crypto:[crypto1.value,crypto2.value],
+price:price.value,
+image:image.value,
+file:file.value,
+poly:poly?.value,
+rigged:rigged?.value,
+textureIncluded:textureIncluded?.value,
+resolution:resolution?.value,
+mapType:mapType?.value,
+seamless:seamless?.value,
+duration:duration?.value,
+loop:loop?.value,
+date:new Date()
 };
 
 await addDoc(collection(db,"assets"),asset);
 
-alert("Asset publié avec succès !");
-
-document.getElementById("publishForm").reset();
-
-});
+alert("✅ publié !");
+}
 
 </script>
 
 </body>
-  </html>
+</html>

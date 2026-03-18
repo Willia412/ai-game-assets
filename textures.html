@@ -3,233 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <title>DEV STOCK SHOP</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-
 body{
-font-family:Arial, sans-serif;
-background:#0f172a;
-color:#e5e7eb;
-margin:0;
+font-family:Arial;
+background:#020617;
+color:white;
+padding:20px;
 }
-
-/* HEADER */
-
-header{
-background:#0b1220;
-padding:40px 20px;
-text-align:center;
-}
-
-header h1{
-margin:0;
-font-size:36px;
-}
-
-header p{
-color:#94a3b8;
-font-size:18px;
-margin-top:10px;
-}
-
-/* MENU */
-
-.menu-bar{
-background:#111827;
-padding:10px;
-text-align:center;
-}
-
-.menu-btn{
-background:#22c55e;
-border:none;
-padding:10px 15px;
-border-radius:8px;
-cursor:pointer;
-}
-
-.menu-content{
-display:none;
-margin-top:10px;
-}
-
-.menu-content a{
-display:block;
-padding:6px;
-color:#22c55e;
-text-decoration:none;
-}
-
-/* SEARCH */
-
-.search{
-text-align:center;
-margin:20px;
-}
-
-.search input{
-width:80%;
-max-width:400px;
-padding:10px;
-border-radius:8px;
-border:none;
-}
-
-/* FILTRES */
-
-.filters{
-display:flex;
-overflow-x:auto;
-gap:10px;
-padding:10px 20px;
-}
-
-.filters button{
-background:#22c55e;
-border:none;
-padding:10px 15px;
-border-radius:8px;
-cursor:pointer;
-white-space:nowrap;
-}
-
-/* LISTING BUTTON */
-
-.listing-toggle{
-position:fixed;
-right:10px;
-top:160px;
-background:#22c55e;
-border:none;
-padding:10px 14px;
-border-radius:8px;
-cursor:pointer;
-z-index:10;
-}
-
-.listing{
-position:fixed;
-right:-220px;
-top:200px;
-width:200px;
-background:#111827;
-padding:10px;
-border-radius:8px 0 0 8px;
-transition:0.3s;
-}
-
-.listing.active{
-right:0;
-}
-
-.listing button{
-width:100%;
-margin:5px 0;
-padding:8px;
-background:#22c55e;
-border:none;
-border-radius:6px;
-cursor:pointer;
-}
-
-/* GRID */
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
 gap:20px;
-padding:20px;
 }
 
 .card{
-background:#111827;
-border-radius:8px;
-padding:10px;
-text-align:center;
+background:#0f172a;
+padding:15px;
+border-radius:10px;
 }
 
-.card h4{
-margin:8px 0;
+img{
+width:100%;
+height:180px;
+object-fit:cover;
 }
 
-.card p{
-font-size:13px;
-color:#94a3b8;
-}
-
-.card button{
-margin-top:8px;
-padding:8px 10px;
-border:none;
+button{
 background:#22c55e;
-border-radius:6px;
+border:none;
+padding:10px;
+margin-top:10px;
+color:white;
 cursor:pointer;
-font-weight:bold;
 }
-
-/* FOOTER */
-
-footer{
-background:#0b1220;
-text-align:center;
-padding:20px;
-margin-top:40px;
-}
-
 </style>
+
 </head>
 
 <body>
 
-<header>
 <h1>DEV STOCK SHOP</h1>
-<p>Le marketplace qui évolue grâce à vous</p>
-</header>
 
-<div class="menu-bar">
-
-<button class="menu-btn" onclick="toggleMenu()">☰ Menu</button>
-
-<div id="menu" class="menu-content">
-<a href="index.html">Accueil</a>
-<a href="contact.html">Contact</a>
-<a href="publish.html">Publier un Asset</a>
-</div>
-
-</div>
-
-<div class="search">
-<input type="text" id="searchInput" placeholder="Rechercher vos assets...">
-</div>
-
-<div class="filters">
-
-<button onclick="setFilter('all')">Tout</button>
-<button onclick="setFilter('free')">Gratuit</button>
-<button onclick="setFilter('premium')">Premium</button>
-<button onclick="setFilter('texture')">Texture</button>
-<button onclick="setFilter('audio')">Audio</button>
-<button onclick="setFilter('animation')">Animation</button>
-
-</div>
-
-<button class="listing-toggle" onclick="toggleListing()">Formats</button>
-
-<div id="listing" class="listing">
-
-<button onclick="setListing('2d')">2D</button>
-<button onclick="setListing('3d')">3D</button>
-<button onclick="setListing('PNG')">PNG</button>
-<button onclick="setListing('MP3')">MP3</button>
-
-</div>
-
-<div class="grid" id="grid"></div>
-
-<footer>
-© 2025 DEV FOUNDATION
-</footer>
+<div class="grid" id="assetsContainer"></div>
 
 <script type="module">
 
@@ -237,86 +54,54 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-
-apiKey: "AIzaSyA5YO60-A0IH5gZFRXCNtj-gg1AyW2-T_U",
+apiKey: "AIzaSyA...",
 authDomain: "dev-foundation.firebaseapp.com",
 projectId: "dev-foundation",
 storageBucket: "dev-foundation.firebasestorage.app",
 messagingSenderId: "1089648631721",
 appId: "1:1089648631721:web:d9932e4606240aedc16eb8"
-
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-function toggleMenu(){
-const menu=document.getElementById("menu");
-menu.style.display=menu.style.display==="block"?"none":"block";
-}
+async function loadAssets(){
 
-function toggleListing(){
-const listing=document.getElementById("listing");
-listing.classList.toggle("active");
-}
+const snapshot = await getDocs(collection(db,"assets"));
 
-let filterCategoryValue='all';
-let filterListingValue='all';
+const container=document.getElementById("assetsContainer");
 
-function setFilter(cat){
-filterCategoryValue=cat;
-displayAssets();
-}
+container.innerHTML="";
 
-function setListing(list){
-filterListingValue=list;
-displayAssets();
-}
+snapshot.forEach(doc=>{
 
-const searchInput=document.getElementById("searchInput");
-searchInput.addEventListener("input",displayAssets);
+let a=doc.data();
 
-async function displayAssets(){
+container.innerHTML+=`
+<div class="card">
 
-const grid=document.getElementById("grid");
-grid.innerHTML='';
+<img src="${a.image}">
 
-const querySnapshot = await getDocs(collection(db,"assets"));
+<h3>${a.name}</h3>
+<p>${a.description}</p>
 
-const searchTerm=searchInput.value.toLowerCase();
+<p>${a.type}</p>
+<p>${a.price}</p>
 
-querySnapshot.forEach((doc)=>{
-
-const asset = doc.data();
-
-if((filterCategoryValue==='all'||asset.category===filterCategoryValue||asset.price===filterCategoryValue)&&
-(filterListingValue==='all'||asset.type===filterListingValue)&&
-(asset.name.toLowerCase().includes(searchTerm)||asset.shop.toLowerCase().includes(searchTerm))){
-
-const card=document.createElement('div');
-card.className='card';
-
-card.innerHTML=`
-
-<h4>${asset.name}</h4>
-<p>${asset.category} • ${asset.format}</p>
-<p>Prix : ${asset.price}</p>
-<p>${asset.creation}</p>
+<a href="${a.file}" target="_blank">
 <button>Télécharger</button>
+</a>
 
+</div>
 `;
-
-grid.appendChild(card);
-
-}
 
 });
 
 }
 
-displayAssets();
+loadAssets();
 
 </script>
 
 </body>
-  </html>
+</html>

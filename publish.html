@@ -2,52 +2,124 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Publier</title>
+<title>Publier un Asset - DEV STOCK SHOP</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body{
-font-family:Arial;
+font-family:Arial,sans-serif;
 background:#0f172a;
-color:white;
+color:#e5e7eb;
+margin:0;
 }
 
-.form{
-max-width:500px;
+header{
+background:#0b1220;
+padding:40px 20px;
+text-align:center;
+}
+
+header h1{
+margin:0;
+font-size:36px;
+}
+
+header p{
+color:#94a3b8;
+font-size:20px;
+margin-top:10px;
+}
+
+.menu-bar{
+background:#111827;
+padding:10px;
+text-align:center;
+}
+
+.menu-btn{
+background:#22c55e;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.menu-content{
+display:none;
+background:#020617;
+margin-top:10px;
+padding:10px;
+border-radius:8px;
+}
+
+.menu-content a{
+display:block;
+color:#22c55e;
+text-decoration:none;
+padding:8px 0;
+}
+
+.form-container{
+max-width:700px;
 margin:auto;
 background:#111827;
-padding:20px;
+padding:30px;
 border-radius:10px;
 }
 
-input,select{
+input, select, textarea{
 width:100%;
 padding:10px;
-margin-top:10px;
+margin-top:6px;
+border-radius:6px;
 border:none;
-border-radius:5px;
+background:#1f2937;
+color:#fff;
 }
 
 button{
-margin-top:15px;
-padding:10px;
+margin-top:20px;
 background:#22c55e;
 border:none;
-border-radius:5px;
+padding:12px;
+width:100%;
+border-radius:8px;
 cursor:pointer;
+}
+
+footer{
+background:#0b1220;
+text-align:center;
+padding:20px;
+margin-top:40px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="form">
-<h2>Publier un asset</h2>
+<header>
+<h1>DEV STOCK SHOP</h1>
+<p>Publier vos assets</p>
+</header>
 
-<form id="form">
+<div class="menu-bar">
+<button class="menu-btn" id="menuBtn">☰ Menu</button>
 
-<input type="text" id="name" placeholder="Nom asset" required>
-<input type="text" id="shop" placeholder="Nom boutique" required>
+<div id="menu" class="menu-content">
+<a href="index.html">Accueil</a>
+<a href="devstock.html">DEV STOCK SHOP</a>
+<a href="publish.html">Publier</a>
+</div>
+</div>
+
+<div class="form-container">
+<h2>Publier un Asset</h2>
+
+<form id="publishForm">
+
+<input type="text" id="shopName" placeholder="Nom boutique" required>
+<input type="text" id="assetName" placeholder="Nom asset" required>
 
 <select id="category">
 <option value="texture">Texture</option>
@@ -55,17 +127,20 @@ cursor:pointer;
 <option value="animation">Animation</option>
 </select>
 
-<input type="text" id="format" placeholder="Format (PNG, MP3...)">
-
-<select id="price">
-<option value="free">Gratuit</option>
-<option value="premium">Premium</option>
+<select id="assetType">
+<option value="2d">2D</option>
+<option value="3d">3D</option>
 </select>
+
+<input type="text" id="fileFormat" placeholder="Format">
+<input type="text" id="crypto" placeholder="Adresse crypto">
 
 <button type="submit">Publier</button>
 
 </form>
 </div>
+
+<footer>© DEV FOUNDATION</footer>
 
 <script type="module">
 
@@ -84,19 +159,31 @@ appId: "1:1089648631721:web:d9932e4606240aedc16eb8"
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-document.getElementById("form").addEventListener("submit", async (e)=>{
+// MENU FIX
+document.getElementById("menuBtn").addEventListener("click",()=>{
+const menu=document.getElementById("menu");
+menu.style.display = menu.style.display==="block" ? "none" : "block";
+});
+
+// SUBMIT FIREBASE
+document.getElementById("publishForm").addEventListener("submit", async (e)=>{
+
 e.preventDefault();
 
-await addDoc(collection(db,"assets"),{
-name: document.getElementById("name").value,
-shop: document.getElementById("shop").value,
-category: document.getElementById("category").value,
-format: document.getElementById("format").value,
-price: document.getElementById("price").value
-});
+let asset={
+shop:shopName.value,
+name:assetName.value,
+category:category.value,
+type:assetType.value,
+format:fileFormat.value,
+crypto:crypto.value
+};
+
+await addDoc(collection(db,"assets"),asset);
 
 alert("Publié !");
 e.target.reset();
+
 });
 
 </script>

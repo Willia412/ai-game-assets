@@ -1,192 +1,329 @@
-<!DOCTYPE html>
+<!-- publish.html -->
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <title>Publier un Asset - DEV STOCK SHOP</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
-body{
-font-family:Arial,sans-serif;
-background:#0f172a;
-color:#e5e7eb;
-margin:0;
+body {
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: #e5e7eb;
+  margin: 0;
+  padding: 0;
 }
-
-header{
-background:#0b1220;
-padding:40px 20px;
-text-align:center;
+header {
+  background: #0b1220;
+  padding: 40px 20px;
+  text-align: center;
 }
-
-header h1{
-margin:0;
-font-size:36px;
+header h1 {
+  margin: 0;
+  font-size: 36px;
 }
-
-header p{
-color:#94a3b8;
-font-size:20px;
-margin-top:10px;
+header p {
+  color: #94a3b8;
+  font-size: 20px;
+  margin-top: 10px;
 }
-
-.menu-bar{
-background:#111827;
-padding:10px;
-text-align:center;
+.menu-bar {
+  background: #111827;
+  padding: 10px;
+  text-align: center;
 }
-
-.menu-btn{
-background:#22c55e;
-border:none;
-padding:10px 15px;
-border-radius:8px;
-cursor:pointer;
+.menu-btn {
+  background: #22c55e;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
 }
-
-.menu-content{
-display:none;
-background:#020617;
-margin-top:10px;
-padding:10px;
-border-radius:8px;
+.menu-content {
+  display: none;
+  background: #020617;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
 }
-
-.menu-content a{
-display:block;
-color:#22c55e;
-text-decoration:none;
-padding:8px 0;
+.menu-content a {
+  display: block;
+  color: #22c55e;
+  text-decoration: none;
+  padding: 8px 0;
 }
-
-.form-container{
-max-width:700px;
-margin:auto;
-background:#111827;
-padding:30px;
-border-radius:10px;
+.form-container {
+  max-width: 700px;
+  margin: 30px auto;
+  background: #111827;
+  padding: 30px;
+  border-radius: 10px;
 }
-
-input, select, textarea{
-width:100%;
-padding:10px;
-margin-top:6px;
-border-radius:6px;
-border:none;
-background:#1f2937;
-color:#fff;
+.form-container label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
 }
-
-button{
-margin-top:20px;
-background:#22c55e;
-border:none;
-padding:12px;
-width:100%;
-border-radius:8px;
-cursor:pointer;
+.form-container input,
+.form-container select,
+.form-container textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 6px;
+  border: none;
+  font-size: 16px;
+  background: #1f2937;
+  color: #e5e7eb;
 }
-
-footer{
-background:#0b1220;
-text-align:center;
-padding:20px;
-margin-top:40px;
+.form-container textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+.form-container button {
+  margin-top: 20px;
+  background: #22c55e;
+  color: #020617;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.crypto-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+}
+.crypto-list input {
+  width: auto;
 }
 </style>
 </head>
-
 <body>
 
 <header>
-<h1>DEV STOCK SHOP</h1>
-<p>Publier vos assets</p>
+  <h1>DEV STOCK SHOP</h1>
+  <p>Publier vos assets sur le marketplace</p>
 </header>
 
 <div class="menu-bar">
-<button class="menu-btn" id="menuBtn">☰ Menu</button>
-
-<div id="menu" class="menu-content">
-<a href="index.html">Accueil</a>
-<a href="devstock.html">DEV STOCK SHOP</a>
-<a href="publish.html">Publier</a>
-</div>
-</div>
-
-<div class="form-container">
-<h2>Publier un Asset</h2>
-
-<form id="publishForm">
-
-<input type="text" id="shopName" placeholder="Nom boutique" required>
-<input type="text" id="assetName" placeholder="Nom asset" required>
-
-<select id="category">
-<option value="texture">Texture</option>
-<option value="audio">Audio</option>
-<option value="animation">Animation</option>
-</select>
-
-<select id="assetType">
-<option value="2d">2D</option>
-<option value="3d">3D</option>
-</select>
-
-<input type="text" id="fileFormat" placeholder="Format">
-<input type="text" id="crypto" placeholder="Adresse crypto">
-
-<button type="submit">Publier</button>
-
-</form>
+  <button class="menu-btn" onclick="toggleMenu()">☰ Menu</button>
+  <div id="menu" class="menu-content">
+    <a href="index.html">Accueil</a>
+    <a href="textures.html">DEV STOCK SHOP</a>
+    <a href="publish.html">Publier un Asset</a>
+    <a href="contact.html">Contact</a>
+  </div>
 </div>
 
-<footer>© DEV FOUNDATION</footer>
+<div class="form-container" id="mainFormContainer">
+
+  <!-- Étape 1 : Vérifier la boutique -->
+  <div id="step1">
+    <h2>Possédez-vous déjà une boutique ?</h2>
+    <button onclick="chooseShop(true)">Oui, je possède une boutique</button>
+    <button onclick="chooseShop(false)">Non, créer une boutique</button>
+  </div>
+
+  <!-- Étape 2 : Créer une boutique -->
+  <div id="createShopForm" style="display:none;">
+    <h2>Créer votre boutique</h2>
+    <label>Nom de votre boutique *</label>
+    <input type="text" id="newShopName" required>
+    <button onclick="createShop()">Créer la boutique</button>
+  </div>
+
+  <!-- Étape 3 : Choix du type d'asset -->
+  <div id="chooseTypeForm" style="display:none;">
+    <h2>Que souhaitez-vous publier ?</h2>
+    <button onclick="showAssetForm('asset')">Asset 2D/3D</button>
+    <button onclick="showAssetForm('texture')">Texture</button>
+    <button onclick="showAssetForm('audio')">Audio</button>
+    <button onclick="showAssetForm('game')">Game System / Prototype</button>
+    <button onclick="showAssetForm('raw')">Raw Photo</button>
+  </div>
+
+  <!-- Étape 4 : Formulaire dynamique -->
+  <form id="publishForm" style="display:none;">
+    <h2>Publier votre asset</h2>
+
+    <label>Nom de l’asset *</label>
+    <input type="text" id="assetName" required>
+
+    <label>Description *</label>
+    <textarea id="description" required></textarea>
+
+    <label>Catégorie *</label>
+    <select id="category" required>
+      <option value="">Choisir</option>
+      <option value="texture">Texture</option>
+      <option value="audio">Audio</option>
+      <option value="animation">Animation</option>
+      <option value="system">Game System</option>
+      <option value="prototype">Game Prototype</option>
+      <option value="raw">Raw Photo</option>
+    </select>
+
+    <label>Collection (optionnel)</label>
+    <input type="text" id="collection">
+
+    <label>Format de fichier *</label>
+    <input type="text" id="fileFormat" placeholder="Ex: PNG, OBJ, MP3" required>
+
+    <label>Poids du fichier (MB) *</label>
+    <input type="number" id="fileSize" required>
+
+    <label>Rigged / Animated (oui/non)</label>
+    <select id="riggedAnimated">
+      <option value="non">Non</option>
+      <option value="oui">Oui</option>
+    </select>
+
+    <label>Textures incluses (oui/non)</label>
+    <select id="texturesIncluded">
+      <option value="non">Non</option>
+      <option value="oui">Oui</option>
+    </select>
+
+    <label>Création *</label>
+    <select id="creationType" required>
+      <option value="">Choisir</option>
+      <option value="ia">IA</option>
+      <option value="manuel">Humain</option>
+    </select>
+
+    <label>Support client *</label>
+    <input type="text" id="supportClient" required>
+
+    <label>Email du créateur *</label>
+    <input type="email" id="email" required>
+
+    <label>Licence *</label>
+    <input type="text" id="license" required>
+
+    <label>Adresse(s) crypto *</label>
+    <div class="crypto-list">
+      <input type="text" placeholder="ETH" class="cryptoInput">
+      <input type="text" placeholder="SOL" class="cryptoInput">
+      <input type="text" placeholder="USDT" class="cryptoInput">
+    </div>
+
+    <label>Prix en FIAT/Crypto *</label>
+    <input type="text" id="price" required>
+
+    <label>Image / Fichier à uploader *</label>
+    <input type="file" id="fileInput" required>
+
+    <button type="submit">Publier mon Asset</button>
+  </form>
+
+</div>
+
+<footer>
+© 2025 DEV FOUNDATION
+</footer>
 
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 const firebaseConfig = {
-apiKey: "AIzaSyA5YO60-A0IH5gZFRXCNtj-gg1AyW2-T_U",
-authDomain: "dev-foundation.firebaseapp.com",
-projectId: "dev-foundation",
-storageBucket: "dev-foundation.firebasestorage.app",
-messagingSenderId: "1089648631721",
-appId: "1:1089648631721:web:d9932e4606240aedc16eb8"
+  apiKey: "AIzaSyA5YO60-A0IH5gZFRXCNtj-gg1AyW2-T_U",
+  authDomain: "dev-foundation.firebaseapp.com",
+  projectId: "dev-foundation",
+  storageBucket: "dev-foundation.firebasestorage.app",
+  messagingSenderId: "1089648631721",
+  appId: "1:1089648631721:web:d9932e4606240aedc16eb8"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
-// MENU FIX
-document.getElementById("menuBtn").addEventListener("click",()=>{
-const menu=document.getElementById("menu");
-menu.style.display = menu.style.display==="block" ? "none" : "block";
-});
+function toggleMenu(){
+  const menu=document.getElementById("menu");
+  menu.style.display = menu.style.display==="block" ? "none" : "block";
+}
 
-// SUBMIT FIREBASE
-document.getElementById("publishForm").addEventListener("submit", async (e)=>{
+// ---- Étape 1 ----
+let shopId = null;
+function chooseShop(hasShop){
+  document.getElementById("step1").style.display = "none";
+  if(hasShop){
+    // TODO: Web3 connect wallet pour récupérer la boutique
+    shopId = "dummyShopId"; // simulation
+    document.getElementById("chooseTypeForm").style.display = "block";
+  } else {
+    document.getElementById("createShopForm").style.display = "block";
+  }
+}
 
-e.preventDefault();
+// ---- Étape 2 ----
+function createShop(){
+  const shopName = document.getElementById("newShopName").value;
+  if(!shopName) return alert("Veuillez entrer un nom de boutique !");
+  // Enregistrement dans Firebase
+  addDoc(collection(db,"shops"), { name: shopName }).then(docRef => {
+    shopId = docRef.id;
+    alert("Boutique créée !");
+    document.getElementById("createShopForm").style.display = "none";
+    document.getElementById("chooseTypeForm").style.display = "block";
+  });
+}
 
-let asset={
-shop:shopName.value,
-name:assetName.value,
-category:category.value,
-type:assetType.value,
-format:fileFormat.value,
-crypto:crypto.value
-};
+// ---- Étape 3 ----
+function showAssetForm(type){
+  document.getElementById("chooseTypeForm").style.display = "none";
+  document.getElementById("publishForm").style.display = "block";
+  document.getElementById("category").value = type;
+}
 
-await addDoc(collection(db,"assets"),asset);
+// ---- Étape 4 ----
+document.getElementById("publishForm").addEventListener("submit", async function(e){
+  e.preventDefault();
 
-alert("Publié !");
-e.target.reset();
+  // Collecte des cryptos
+  const cryptoInputs = document.querySelectorAll(".cryptoInput");
+  const cryptoAddresses = Array.from(cryptoInputs)
+                              .map(input => input.value)
+                              .filter(val => val.trim() !== "");
 
+  // Upload du fichier
+  const file = document.getElementById("fileInput").files[0];
+  if(!file) return alert("Veuillez sélectionner un fichier !");
+  const fileRef = ref(storage, `assets/${file.name}`);
+  await uploadBytes(fileRef, file);
+  const fileURL = await getDownloadURL(fileRef);
+
+  const asset = {
+    shopId: shopId,
+    name: document.getElementById("assetName").value,
+    description: document.getElementById("description").value,
+    category: document.getElementById("category").value,
+    collection: document.getElementById("collection").value,
+    format: document.getElementById("fileFormat").value,
+    fileSize: document.getElementById("fileSize").value,
+    riggedAnimated: document.getElementById("riggedAnimated").value,
+    texturesIncluded: document.getElementById("texturesIncluded").value,
+    creation: document.getElementById("creationType").value,
+    supportClient: document.getElementById("supportClient").value,
+    email: document.getElementById("email").value,
+    license: document.getElementById("license").value,
+    crypto: cryptoAddresses,
+    price: document.getElementById("price").value,
+    fileURL: fileURL
+  };
+
+  await addDoc(collection(db,"assets"), asset);
+  alert("Asset publié avec succès !");
+  document.getElementById("publishForm").reset();
 });
 
 </script>
-
 </body>
-</html>
+        </html>

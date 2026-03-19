@@ -3,50 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <title>DEV STOCK SHOP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body{
-font-family:Arial;
-background:#020617;
-color:white;
-padding:20px;
+font-family:Arial, sans-serif;
+background:#0f172a;
+color:#e5e7eb;
+margin:0;
+}
+
+header{
+background:#0b1220;
+padding:40px 20px;
+text-align:center;
+}
+
+.menu-bar{
+background:#111827;
+padding:10px;
+text-align:center;
+}
+
+.menu-btn{
+background:#22c55e;
+border:none;
+padding:10px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.menu-content{
+display:none;
+margin-top:10px;
+}
+
+.menu-content a{
+display:block;
+color:#22c55e;
+padding:6px;
+text-decoration:none;
 }
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
 gap:20px;
+padding:20px;
 }
 
 .card{
-background:#0f172a;
-padding:15px;
-border-radius:10px;
-}
-
-img{
-width:100%;
-height:180px;
-object-fit:cover;
-}
-
-button{
-background:#22c55e;
-border:none;
+background:#111827;
 padding:10px;
-margin-top:10px;
-color:white;
-cursor:pointer;
+border-radius:8px;
+text-align:center;
 }
 </style>
-
 </head>
 
 <body>
 
+<header>
 <h1>DEV STOCK SHOP</h1>
+<p>Marketplace connecté à Firebase</p>
+</header>
 
-<div class="grid" id="assetsContainer"></div>
+<div class="menu-bar">
+<button class="menu-btn" id="menuBtn">☰ Menu</button>
+
+<div id="menu" class="menu-content">
+<a href="index.html">Accueil</a>
+<a href="publish.html">Publier</a>
+</div>
+</div>
+
+<div class="grid" id="grid"></div>
 
 <script type="module">
 
@@ -54,7 +85,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-apiKey: "AIzaSyA...",
+apiKey: "AIzaSyA5YO60-A0IH5gZFRXCNtj-gg1AyW2-T_U",
 authDomain: "dev-foundation.firebaseapp.com",
 projectId: "dev-foundation",
 storageBucket: "dev-foundation.firebasestorage.app",
@@ -65,38 +96,35 @@ appId: "1:1089648631721:web:d9932e4606240aedc16eb8"
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-async function loadAssets(){
-
-const snapshot = await getDocs(collection(db,"assets"));
-
-const container=document.getElementById("assetsContainer");
-
-container.innerHTML="";
-
-snapshot.forEach(doc=>{
-
-let a=doc.data();
-
-container.innerHTML+=`
-<div class="card">
-
-<img src="${a.image}">
-
-<h3>${a.name}</h3>
-<p>${a.description}</p>
-
-<p>${a.type}</p>
-<p>${a.price}</p>
-
-<a href="${a.file}" target="_blank">
-<button>Télécharger</button>
-</a>
-
-</div>
-`;
-
+/* MENU FIX */
+document.getElementById("menuBtn").addEventListener("click", () => {
+const menu = document.getElementById("menu");
+menu.style.display = menu.style.display === "block" ? "none" : "block";
 });
 
+/* LOAD ASSETS */
+async function loadAssets(){
+const grid = document.getElementById("grid");
+grid.innerHTML = "";
+
+const querySnapshot = await getDocs(collection(db,"assets"));
+
+querySnapshot.forEach((doc)=>{
+const asset = doc.data();
+
+const card = document.createElement("div");
+card.className = "card";
+
+card.innerHTML = `
+<h3>${asset.name}</h3>
+<p>${asset.category}</p>
+<p>${asset.format}</p>
+<p>${asset.price}</p>
+<button>Télécharger</button>
+`;
+
+grid.appendChild(card);
+});
 }
 
 loadAssets();

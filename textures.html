@@ -1,141 +1,168 @@
-<!-- dev-stock-shop.html -->
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <title>DEV STOCK SHOP</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: #0f172a;
-  color: #e5e7eb;
-  margin: 0;
+body{
+  font-family:Arial,sans-serif;
+  background:#0f172a;
+  color:#e5e7eb;
+  margin:0;
 }
-header {
-  background: #0b1220;
-  padding: 40px 20px;
-  text-align: center;
+
+/* HEADER */
+header{
+  background:#0b1220;
+  padding:40px 20px;
+  text-align:center;
 }
-header h1 { margin: 0; font-size: 36px; }
-header p { color: #94a3b8; font-size: 18px; margin-top: 10px; }
-.menu-bar {
-  background: #111827;
-  padding: 10px;
-  text-align: center;
+header h1{
+  margin:0;
+  font-size:36px;
 }
-.menu-btn {
-  background: #22c55e;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
+header p{
+  color:#94a3b8;
+  font-size:18px;
+  margin-top:10px;
 }
-.menu-content {
-  display: none;
-  background: #020617;
-  margin-top: 10px;
-  padding: 10px;
-  border-radius: 8px;
+
+/* MENU */
+.menu-bar{
+  background:#111827;
+  padding:10px;
+  text-align:center;
 }
-.menu-content a {
-  display: block;
-  color: #22c55e;
-  text-decoration: none;
-  padding: 8px 0;
+.menu-btn{
+  background:#22c55e;
+  border:none;
+  padding:10px 15px;
+  border-radius:8px;
+  cursor:pointer;
 }
-.search {
-  text-align: center;
-  margin: 20px;
+.menu-content{
+  display:none;
+  margin-top:10px;
+  background:#020617;
+  padding:10px;
+  border-radius:8px;
 }
-.search input {
-  width: 80%;
-  max-width: 400px;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
+.menu-content a{
+  display:block;
+  padding:6px;
+  color:#22c55e;
+  text-decoration:none;
 }
-.filters {
-  display: flex;
-  overflow-x: auto;
-  gap: 10px;
-  padding: 10px 20px;
+
+/* SEARCH */
+.search{
+  text-align:center;
+  margin:20px;
 }
-.filters button {
-  background: #22c55e;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 8px;
-  cursor: pointer;
-  white-space: nowrap;
+.search input{
+  width:80%;
+  max-width:400px;
+  padding:10px;
+  border-radius:8px;
+  border:none;
 }
-.listing-toggle {
-  position: fixed;
-  right: 10px;
-  top: 160px;
-  background: #22c55e;
-  border: none;
-  padding: 10px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-  z-index: 10;
+
+/* FILTER BAR */
+.filters{
+  display:flex;
+  overflow-x:auto;
+  gap:10px;
+  padding:10px 20px;
 }
-.listing {
-  position: fixed;
-  right: -220px;
-  top: 200px;
-  width: 200px;
-  background: #111827;
-  padding: 10px;
-  border-radius: 8px 0 0 8px;
-  transition: 0.3s;
+.filters button{
+  background:#22c55e;
+  border:none;
+  padding:10px 15px;
+  border-radius:8px;
+  cursor:pointer;
+  white-space:nowrap;
 }
-.listing.active { right: 0; }
-.listing button {
-  width: 100%;
-  margin: 5px 0;
-  padding: 8px;
-  background: #22c55e;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+
+/* LISTING BUTTON */
+.listing-toggle{
+  position:fixed;
+  right:10px;
+  top:160px;
+  background:#22c55e;
+  border:none;
+  padding:10px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  z-index:10;
 }
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(180px,1fr));
-  gap: 20px;
-  padding: 20px;
+.listing{
+  position:fixed;
+  right:-220px;
+  top:200px;
+  width:200px;
+  background:#111827;
+  padding:10px;
+  border-radius:8px 0 0 8px;
+  transition:0.3s;
 }
-.card {
-  background: #111827;
-  border-radius: 8px;
-  padding: 10px;
-  text-align: center;
+.listing.active{
+  right:0;
 }
-.card h4 { margin: 8px 0; }
-.card p { font-size: 13px; color: #94a3b8; }
-.card button {
-  margin-top: 8px;
-  padding: 8px 10px;
-  border: none;
-  background: #22c55e;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
+.listing button{
+  width:100%;
+  margin:5px 0;
+  padding:8px;
+  background:#22c55e;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
 }
-footer {
-  background: #0b1220;
-  text-align: center;
-  padding: 20px;
-  margin-top: 40px;
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:20px;
+  padding:20px;
+}
+.card{
+  background:#111827;
+  border-radius:8px;
+  padding:10px;
+  text-align:center;
+}
+.card h4{
+  margin:8px 0;
+}
+.card p{
+  font-size:13px;
+  color:#94a3b8;
+}
+.card button{
+  margin-top:8px;
+  padding:8px 10px;
+  border:none;
+  background:#22c55e;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+/* FOOTER */
+footer{
+  background:#0b1220;
+  text-align:center;
+  padding:20px;
+  margin-top:40px;
 }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>DEV STOCK SHOP</h1>
-  <p>Le marketplace qui évolue grâce à vous</p>
+<h1>DEV STOCK SHOP</h1>
+<p>Le marketplace qui évolue grâce à vous</p>
 </header>
 
 <div class="menu-bar">
@@ -152,20 +179,21 @@ footer {
 </div>
 
 <div class="filters">
-  <button onclick="setFilter('all')">Tout</button>
-  <button onclick="setFilter('free')">Gratuit</button>
-  <button onclick="setFilter('premium')">Premium</button>
-  <button onclick="setFilter('texture')">Texture</button>
-  <button onclick="setFilter('audio')">Audio</button>
-  <button onclick="setFilter('animation')">Animation</button>
+  <button onclick="setFilterCategory('all')">Tout</button>
+  <button onclick="setFilterCategory('asset')">Asset</button>
+  <button onclick="setFilterCategory('son')">Son</button>
+  <button onclick="setFilterCategory('texture')">Texture</button>
+  <button onclick="setFilterCategory('animation')">Animation</button>
 </div>
 
-<button class="listing-toggle" onclick="toggleListing()">Formats</button>
+<button class="listing-toggle" onclick="toggleListing()">Types</button>
 <div id="listing" class="listing"></div>
 
 <div class="grid" id="grid"></div>
 
-<footer>© 2025 DEV FOUNDATION</footer>
+<footer>
+© 2025 DEV FOUNDATION
+</footer>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -179,78 +207,77 @@ const firebaseConfig = {
   messagingSenderId: "1089648631721",
   appId: "1:1089648631721:web:d9932e4606240aedc16eb8"
 };
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-function toggleMenu() {
+let filterCategory = 'all';
+let filterType = 'all';
+
+function toggleMenu(){
   const menu = document.getElementById("menu");
-  menu.style.display = menu.style.display==="block" ? "none" : "block";
+  menu.style.display = menu.style.display==="block"?"none":"block";
 }
 
-let filterCategoryValue = 'all';
-let filterListingValue = 'all';
-let currentCategory = 'all';
+function toggleListing(){
+  document.getElementById("listing").classList.toggle("active");
+}
 
-function setFilter(cat){
-  filterCategoryValue = cat;
-  currentCategory = cat;
+function setFilterCategory(cat){
+  filterCategory = cat;
   updateListingButtons();
   displayAssets();
 }
 
-function toggleListing() {
-  document.getElementById("listing").classList.toggle("active");
-}
-
-// Affiche dynamiquement les boutons listing selon la catégorie sélectionnée
+// Dynamically create listing buttons based on category
 function updateListingButtons(){
   const listing = document.getElementById("listing");
   listing.innerHTML = '';
-  let options = [];
-  if(currentCategory==='texture' || currentCategory==='all') options = ['2D', '3D', 'PNG', 'JPG'];
-  if(currentCategory==='audio') options = ['MP3', 'WAV', 'Ambient', 'Gun', 'UI'];
-  if(currentCategory==='animation') options = ['FBX', 'GLB', 'OBJ'];
-  if(currentCategory==='free' || currentCategory==='premium') options = ['Tout'];
-  options.forEach(opt => {
+  let types = [];
+  if(filterCategory === 'asset') types = ['2D','3D','Rigged','Animated'];
+  else if(filterCategory === 'son') types = ['Ambiente','Gun','UI','Loopable'];
+  else if(filterCategory === 'texture') types = ['Diffuse','Normal','Specular'];
+  else if(filterCategory === 'animation') types = ['Skeletal','Blend','Facial'];
+
+  types.forEach(t=>{
     const btn = document.createElement('button');
-    btn.textContent = opt;
-    btn.onclick = () => { filterListingValue = opt.toLowerCase(); displayAssets(); };
+    btn.textContent = t;
+    btn.onclick = ()=>{ filterType = t.toLowerCase(); displayAssets(); };
     listing.appendChild(btn);
   });
 }
 
-// Recherche et filtre
 const searchInput = document.getElementById("searchInput");
 searchInput.addEventListener("input", displayAssets);
 
-async function displayAssets() {
+async function displayAssets(){
   const grid = document.getElementById("grid");
   grid.innerHTML = '';
   const querySnapshot = await getDocs(collection(db,"assets"));
   const searchTerm = searchInput.value.toLowerCase();
 
-  querySnapshot.forEach(doc => {
+  querySnapshot.forEach(doc=>{
     const asset = doc.data();
-    if((filterCategoryValue==='all' || asset.category===filterCategoryValue || asset.price===filterCategoryValue) &&
-       (filterListingValue==='all' || asset.format?.toLowerCase()===filterListingValue || filterListingValue==='tout') &&
-       (asset.name.toLowerCase().includes(searchTerm) || asset.shopName?.toLowerCase().includes(searchTerm))) {
-
+    if(
+      (filterCategory==='all' || asset.category===filterCategory) &&
+      (filterType==='all' || asset.type?.toLowerCase()===filterType) &&
+      (asset.name.toLowerCase().includes(searchTerm) || asset.shop.toLowerCase().includes(searchTerm))
+    ){
       const card = document.createElement('div');
-      card.className='card';
+      card.className = 'card';
       card.innerHTML = `
         <h4>${asset.name}</h4>
         <p>${asset.category} • ${asset.format}</p>
-        <p>Prix : ${asset.price}</p>
-        <p>${asset.creation}</p>
-        <button onclick="window.open('${asset.fileURL}', '_blank')">Télécharger</button>
+        <p>Prix : ${asset.priceFIAT || asset.priceCrypto || 'N/A'}</p>
+        <p>${asset.creation || ''}</p>
+        <button>Télécharger</button>
       `;
       grid.appendChild(card);
     }
   });
 }
 
-updateListingButtons();
 displayAssets();
 </script>
 </body>
-                                  </html>
+    </html>

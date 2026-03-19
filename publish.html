@@ -2,107 +2,78 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Publish Asset</title>
+<title>Publier</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body{
 font-family:Arial;
 background:#0f172a;
 color:white;
-padding:20px;
 }
 
-input,select,textarea{
-display:block;
-margin:10px 0;
-padding:10px;
+.form{
+max-width:500px;
+margin:auto;
+background:#111827;
+padding:20px;
+border-radius:10px;
+}
+
+input,select{
 width:100%;
+padding:10px;
+margin-top:10px;
+border:none;
+border-radius:5px;
 }
 
 button{
+margin-top:15px;
 padding:10px;
 background:#22c55e;
 border:none;
-color:white;
+border-radius:5px;
 cursor:pointer;
 }
-
-.hidden{
-display:none;
-}
 </style>
-
 </head>
 
 <body>
 
-<h1>Publier un asset</h1>
+<div class="form">
+<h2>Publier un asset</h2>
 
-<select id="assetType" onchange="changeForm()">
-<option value="">Choisir type</option>
-<option value="model">3D Model</option>
+<form id="form">
+
+<input type="text" id="name" placeholder="Nom asset" required>
+<input type="text" id="shop" placeholder="Nom boutique" required>
+
+<select id="category">
 <option value="texture">Texture</option>
 <option value="audio">Audio</option>
+<option value="animation">Animation</option>
 </select>
 
-<input id="name" placeholder="Nom">
-<textarea id="description" placeholder="Description"></textarea>
-<input id="category" placeholder="Catégorie">
-<input id="collection" placeholder="Collection">
+<input type="text" id="format" placeholder="Format (PNG, MP3...)">
 
-<input id="format" placeholder="Format fichier">
-<input id="weight" placeholder="Poids">
-<input id="email" placeholder="Email support">
-<input id="creation" placeholder="IA ou Manuel">
-
-<input id="crypto1" placeholder="Adresse crypto 1">
-<input id="crypto2" placeholder="Adresse crypto 2">
-
-<input id="price" placeholder="Prix">
-<input id="image" placeholder="Lien image">
-<input id="file" placeholder="Lien téléchargement">
-
-<!-- MODEL -->
-<div id="modelFields" class="hidden">
-<input id="poly" placeholder="Nombre de polygones">
-<select id="rigged">
-<option value="oui">Rigged</option>
-<option value="non">Non</option>
+<select id="price">
+<option value="free">Gratuit</option>
+<option value="premium">Premium</option>
 </select>
-<select id="textureIncluded">
-<option value="oui">Texture incluse</option>
-<option value="non">Non</option>
-</select>
+
+<button type="submit">Publier</button>
+
+</form>
 </div>
-
-<!-- TEXTURE -->
-<div id="textureFields" class="hidden">
-<input id="resolution" placeholder="Résolution">
-<input id="mapType" placeholder="Type de map">
-<select id="seamless">
-<option value="oui">Seamless</option>
-<option value="non">Non</option>
-</select>
-</div>
-
-<!-- AUDIO -->
-<div id="audioFields" class="hidden">
-<input id="duration" placeholder="Durée">
-<select id="loop">
-<option value="oui">Loop</option>
-<option value="non">Non</option>
-</select>
-</div>
-
-<button onclick="publish()">Publier</button>
 
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-apiKey: "AIzaSyA...",
+apiKey: "AIzaSyA5YO60-A0IH5gZFRXCNtj-gg1AyW2-T_U",
 authDomain: "dev-foundation.firebaseapp.com",
 projectId: "dev-foundation",
 storageBucket: "dev-foundation.firebasestorage.app",
@@ -113,51 +84,20 @@ appId: "1:1089648631721:web:d9932e4606240aedc16eb8"
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-window.changeForm = function(){
+document.getElementById("form").addEventListener("submit", async (e)=>{
+e.preventDefault();
 
-document.getElementById("modelFields").classList.add("hidden");
-document.getElementById("textureFields").classList.add("hidden");
-document.getElementById("audioFields").classList.add("hidden");
+await addDoc(collection(db,"assets"),{
+name: document.getElementById("name").value,
+shop: document.getElementById("shop").value,
+category: document.getElementById("category").value,
+format: document.getElementById("format").value,
+price: document.getElementById("price").value
+});
 
-let type=document.getElementById("assetType").value;
-
-if(type==="model") document.getElementById("modelFields").classList.remove("hidden");
-if(type==="texture") document.getElementById("textureFields").classList.remove("hidden");
-if(type==="audio") document.getElementById("audioFields").classList.remove("hidden");
-
-}
-
-window.publish = async function(){
-
-let asset={
-type:assetType.value,
-name:name.value,
-description:description.value,
-category:category.value,
-collection:collection.value,
-format:format.value,
-weight:weight.value,
-email:email.value,
-creation:creation.value,
-crypto:[crypto1.value,crypto2.value],
-price:price.value,
-image:image.value,
-file:file.value,
-poly:poly?.value,
-rigged:rigged?.value,
-textureIncluded:textureIncluded?.value,
-resolution:resolution?.value,
-mapType:mapType?.value,
-seamless:seamless?.value,
-duration:duration?.value,
-loop:loop?.value,
-date:new Date()
-};
-
-await addDoc(collection(db,"assets"),asset);
-
-alert("✅ publié !");
-}
+alert("Publié !");
+e.target.reset();
+});
 
 </script>
 

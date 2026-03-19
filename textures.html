@@ -1,135 +1,256 @@
-<!DOCTYPE html>
+<!-- dev-stock-shop.html -->
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <title>DEV STOCK SHOP</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
-body{
-font-family:Arial, sans-serif;
-background:#0f172a;
-color:#e5e7eb;
-margin:0;
+body {
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: #e5e7eb;
+  margin: 0;
 }
-
-header{
-background:#0b1220;
-padding:40px 20px;
-text-align:center;
+header {
+  background: #0b1220;
+  padding: 40px 20px;
+  text-align: center;
 }
-
-.menu-bar{
-background:#111827;
-padding:10px;
-text-align:center;
+header h1 { margin: 0; font-size: 36px; }
+header p { color: #94a3b8; font-size: 18px; margin-top: 10px; }
+.menu-bar {
+  background: #111827;
+  padding: 10px;
+  text-align: center;
 }
-
-.menu-btn{
-background:#22c55e;
-border:none;
-padding:10px;
-border-radius:8px;
-cursor:pointer;
+.menu-btn {
+  background: #22c55e;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
 }
-
-.menu-content{
-display:none;
-margin-top:10px;
+.menu-content {
+  display: none;
+  background: #020617;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
 }
-
-.menu-content a{
-display:block;
-color:#22c55e;
-padding:6px;
-text-decoration:none;
+.menu-content a {
+  display: block;
+  color: #22c55e;
+  text-decoration: none;
+  padding: 8px 0;
 }
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
-gap:20px;
-padding:20px;
+.search {
+  text-align: center;
+  margin: 20px;
 }
-
-.card{
-background:#111827;
-padding:10px;
-border-radius:8px;
-text-align:center;
+.search input {
+  width: 80%;
+  max-width: 400px;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+}
+.filters {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  padding: 10px 20px;
+}
+.filters button {
+  background: #22c55e;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.listing-toggle {
+  position: fixed;
+  right: 10px;
+  top: 160px;
+  background: #22c55e;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 10;
+}
+.listing {
+  position: fixed;
+  right: -220px;
+  top: 200px;
+  width: 200px;
+  background: #111827;
+  padding: 10px;
+  border-radius: 8px 0 0 8px;
+  transition: 0.3s;
+}
+.listing.active { right: 0; }
+.listing button {
+  width: 100%;
+  margin: 5px 0;
+  padding: 8px;
+  background: #22c55e;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(180px,1fr));
+  gap: 20px;
+  padding: 20px;
+}
+.card {
+  background: #111827;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+.card h4 { margin: 8px 0; }
+.card p { font-size: 13px; color: #94a3b8; }
+.card button {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border: none;
+  background: #22c55e;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+footer {
+  background: #0b1220;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
 }
 </style>
 </head>
-
 <body>
 
 <header>
-<h1>DEV STOCK SHOP</h1>
-<p>Marketplace connecté à Firebase</p>
+  <h1>DEV STOCK SHOP</h1>
+  <p>Le marketplace qui évolue grâce à vous</p>
 </header>
 
 <div class="menu-bar">
-<button class="menu-btn" id="menuBtn">☰ Menu</button>
+  <button class="menu-btn" onclick="toggleMenu()">☰ Menu</button>
+  <div id="menu" class="menu-content">
+    <a href="index.html">Accueil</a>
+    <a href="publish.html">Publier un Asset</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</div>
 
-<div id="menu" class="menu-content">
-<a href="index.html">Accueil</a>
-<a href="publish.html">Publier</a>
+<div class="search">
+  <input type="text" id="searchInput" placeholder="Rechercher vos assets...">
 </div>
+
+<div class="filters">
+  <button onclick="setFilter('all')">Tout</button>
+  <button onclick="setFilter('free')">Gratuit</button>
+  <button onclick="setFilter('premium')">Premium</button>
+  <button onclick="setFilter('texture')">Texture</button>
+  <button onclick="setFilter('audio')">Audio</button>
+  <button onclick="setFilter('animation')">Animation</button>
 </div>
+
+<button class="listing-toggle" onclick="toggleListing()">Formats</button>
+<div id="listing" class="listing"></div>
 
 <div class="grid" id="grid"></div>
 
-<script type="module">
+<footer>© 2025 DEV FOUNDATION</footer>
 
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-apiKey: "AIzaSyA5YO60-A0IH5gZFRXCNtj-gg1AyW2-T_U",
-authDomain: "dev-foundation.firebaseapp.com",
-projectId: "dev-foundation",
-storageBucket: "dev-foundation.firebasestorage.app",
-messagingSenderId: "1089648631721",
-appId: "1:1089648631721:web:d9932e4606240aedc16eb8"
+  apiKey: "AIzaSyA5YO60-A0IH5gZFRXCNtj-gg1AyW2-T_U",
+  authDomain: "dev-foundation.firebaseapp.com",
+  projectId: "dev-foundation",
+  storageBucket: "dev-foundation.firebasestorage.app",
+  messagingSenderId: "1089648631721",
+  appId: "1:1089648631721:web:d9932e4606240aedc16eb8"
 };
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-/* MENU FIX */
-document.getElementById("menuBtn").addEventListener("click", () => {
-const menu = document.getElementById("menu");
-menu.style.display = menu.style.display === "block" ? "none" : "block";
-});
-
-/* LOAD ASSETS */
-async function loadAssets(){
-const grid = document.getElementById("grid");
-grid.innerHTML = "";
-
-const querySnapshot = await getDocs(collection(db,"assets"));
-
-querySnapshot.forEach((doc)=>{
-const asset = doc.data();
-
-const card = document.createElement("div");
-card.className = "card";
-
-card.innerHTML = `
-<h3>${asset.name}</h3>
-<p>${asset.category}</p>
-<p>${asset.format}</p>
-<p>${asset.price}</p>
-<button>Télécharger</button>
-`;
-
-grid.appendChild(card);
-});
+function toggleMenu() {
+  const menu = document.getElementById("menu");
+  menu.style.display = menu.style.display==="block" ? "none" : "block";
 }
 
-loadAssets();
+let filterCategoryValue = 'all';
+let filterListingValue = 'all';
+let currentCategory = 'all';
 
+function setFilter(cat){
+  filterCategoryValue = cat;
+  currentCategory = cat;
+  updateListingButtons();
+  displayAssets();
+}
+
+function toggleListing() {
+  document.getElementById("listing").classList.toggle("active");
+}
+
+// Affiche dynamiquement les boutons listing selon la catégorie sélectionnée
+function updateListingButtons(){
+  const listing = document.getElementById("listing");
+  listing.innerHTML = '';
+  let options = [];
+  if(currentCategory==='texture' || currentCategory==='all') options = ['2D', '3D', 'PNG', 'JPG'];
+  if(currentCategory==='audio') options = ['MP3', 'WAV', 'Ambient', 'Gun', 'UI'];
+  if(currentCategory==='animation') options = ['FBX', 'GLB', 'OBJ'];
+  if(currentCategory==='free' || currentCategory==='premium') options = ['Tout'];
+  options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.textContent = opt;
+    btn.onclick = () => { filterListingValue = opt.toLowerCase(); displayAssets(); };
+    listing.appendChild(btn);
+  });
+}
+
+// Recherche et filtre
+const searchInput = document.getElementById("searchInput");
+searchInput.addEventListener("input", displayAssets);
+
+async function displayAssets() {
+  const grid = document.getElementById("grid");
+  grid.innerHTML = '';
+  const querySnapshot = await getDocs(collection(db,"assets"));
+  const searchTerm = searchInput.value.toLowerCase();
+
+  querySnapshot.forEach(doc => {
+    const asset = doc.data();
+    if((filterCategoryValue==='all' || asset.category===filterCategoryValue || asset.price===filterCategoryValue) &&
+       (filterListingValue==='all' || asset.format?.toLowerCase()===filterListingValue || filterListingValue==='tout') &&
+       (asset.name.toLowerCase().includes(searchTerm) || asset.shopName?.toLowerCase().includes(searchTerm))) {
+
+      const card = document.createElement('div');
+      card.className='card';
+      card.innerHTML = `
+        <h4>${asset.name}</h4>
+        <p>${asset.category} • ${asset.format}</p>
+        <p>Prix : ${asset.price}</p>
+        <p>${asset.creation}</p>
+        <button onclick="window.open('${asset.fileURL}', '_blank')">Télécharger</button>
+      `;
+      grid.appendChild(card);
+    }
+  });
+}
+
+updateListingButtons();
+displayAssets();
 </script>
-
 </body>
-</html>
+                                  </html>
